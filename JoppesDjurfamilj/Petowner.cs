@@ -16,55 +16,87 @@ namespace JoppesDjurfamilj {
 
 
         public void Menu() {
-            Console.WriteLine("=== Welcome to {0}'s Family of Pets ===", name);
-            Console.WriteLine("[L] List animals\n" +
-                              "[S] Storage\n" +
-                              "[A] About this program\n" +
-                              "[Q] Quit\n");
-            ConsoleKeyInfo userInputMainMenu = Console.ReadKey(true);
-            switch(userInputMainMenu.Key) {
-                case ConsoleKey.L: {
-                    // TODO: List animals, info, choose animal to interact with
-                    break;
-                }
-                case ConsoleKey.S: {
-                    // TODO: Undermenu to show availabe food and balls.
-                    Console.WriteLine("=== The Storage ===\n *some info*");
-                    Console.WriteLine("[F] Foods\n" +
-                                      "[B] Balls\n" +
-                                      "[R] Return\n");
-                    ConsoleKeyInfo userInputSubMenuStorage = Console.ReadKey(true);
-                    switch(userInputSubMenuStorage.Key) {
-                        case ConsoleKey.F: {
-                            // TODO: Show food
-                            break;
-                        }
-                        case ConsoleKey.B: {
-                            // TODO: Show balls
-                            break;
-                        }
-                        case ConsoleKey.R: {
-                            // TODO: Return
-                            break;
-                        }
-                        default: {
-                            // TODO: If the user don't make a menu choise...
-                            break;
-                        }
+            while(true) {
+                Console.WriteLine("=== Welcome to {0}'s Family of Pets ===", name);
+                Console.WriteLine("[L] List animals\n" +
+                                  "[S] Storage\n" +
+                                  "[A] About this program\n" +
+                                  "[Q] Quit\n");
+                ConsoleKeyInfo userInputMainMenu = Console.ReadKey(true);
+                switch(userInputMainMenu.Key) {
+                    //  List animals
+                    case ConsoleKey.L: {
+                        // TODO: List animals, info, choose animal to interact with
+                        break;
                     }
-                    break;
-                }
-                case ConsoleKey.A: {
-                    // TODO: About this program and how to use it.
-                    break;
-                }
-                case ConsoleKey.Q: {
-                    // TODO: Quit the program
-                    break;
-                }
-                default: {
-                    // TODO: If the user don't make a menu choise...
-                    break;
+                    //  Storage
+                    case ConsoleKey.S: {
+                        // TODO: Undermenu to show availabe food and balls.
+                        while(true) {
+                            Console.WriteLine("=== The Storage ===\n" +
+                                             $"In {name}'s stoage you can find\n" +
+                                              "anything the pets could ever need." +
+                                              "  [F] Foods\n" +
+                                              "  [B] Balls\n" +
+                                              "  [R] Return\n");
+                            ConsoleKeyInfo userInputSubMenuStorage = Console.ReadKey(true);
+                            switch(userInputSubMenuStorage.Key) {
+                                case ConsoleKey.F: {
+                                    // TODO: Show food
+                                    Console.WriteLine("Food - amount - Pet/s who loves this");
+                                    Console.WriteLine("============================\n" +
+                                                      "Press any key to continue...");
+                                    Console.ReadKey();
+                                    Console.Clear();
+                                    break;
+                                }
+                                case ConsoleKey.B: {
+                                    // TODO: Show balls
+                                    Console.WriteLine("Ball size - Ball texture - amount");
+                                    Console.WriteLine("============================\n" +
+                                                      "Press any key to continue...");
+                                    Console.ReadKey();
+                                    Console.Clear();
+                                    break;
+                                }
+                                case ConsoleKey.R: {
+                                    Console.WriteLine("  Returning... ");
+                                    continue;
+                                }
+                                default: {
+                                    Console.Clear();
+                                    Console.WriteLine("  Ohps, please choose something in the menu");
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                        break;
+                    }
+                    //  About this program
+                    case ConsoleKey.A: {
+                        // TODO: About this program and how to use it.
+                        Console.WriteLine("====================================\n" +
+                                          "This is about Joppe and his family of pets\n" +
+                                          "You can play with them, feed them.. \n" +
+                                          "blablabla\n" +
+                                          "*something about how to play*");
+                        Console.WriteLine("============================\n" +
+                                          "Press any key to continue...");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+                    }
+                    case ConsoleKey.Q: {
+                        Environment.Exit(0);
+                        break;
+                    }
+                    default: {
+                        // TODO: If the user don't make a menu choise...
+                        Console.Clear();
+                        Console.WriteLine("Ohps, please choose something in the menu");
+                        break;
+                    }
                 }
             }
 
