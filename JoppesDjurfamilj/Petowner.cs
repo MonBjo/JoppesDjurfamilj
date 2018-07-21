@@ -17,8 +17,9 @@ namespace JoppesDjurfamilj {
 
         public void Menu() {
             while(true) {
+                Console.Clear();
                 Console.WriteLine("=== Welcome to {0}'s Family of Pets ===", name);
-                Console.WriteLine("[L] List animals\n" +
+                Console.WriteLine("[L] List pets\n" +
                                   "[S] Storage\n" +
                                   "[A] About this program\n" +
                                   "[Q] Quit\n");
@@ -27,6 +28,12 @@ namespace JoppesDjurfamilj {
                     //  List animals
                     case ConsoleKey.L: {
                         // TODO: List animals, info, choose animal to interact with
+                        Console.Clear();
+                        Console.Write("Loads of pets\n" +
+                                      "Type the ");
+                        Console.WriteLine("============================\n" +
+                                          "Press any key to continue...");
+                        Console.ReadKey();
                         break;
                     }
                     //  Storage
@@ -35,7 +42,7 @@ namespace JoppesDjurfamilj {
                         while(true) {
                             Console.WriteLine("=== The Storage ===\n" +
                                              $"In {name}'s stoage you can find\n" +
-                                              "anything the pets could ever need." +
+                                              "anything the pets could ever need.\n" +
                                               "  [F] Foods\n" +
                                               "  [B] Balls\n" +
                                               "  [R] Return\n");
@@ -47,7 +54,6 @@ namespace JoppesDjurfamilj {
                                     Console.WriteLine("============================\n" +
                                                       "Press any key to continue...");
                                     Console.ReadKey();
-                                    Console.Clear();
                                     break;
                                 }
                                 case ConsoleKey.B: {
@@ -56,15 +62,14 @@ namespace JoppesDjurfamilj {
                                     Console.WriteLine("============================\n" +
                                                       "Press any key to continue...");
                                     Console.ReadKey();
-                                    Console.Clear();
                                     break;
                                 }
                                 case ConsoleKey.R: {
                                     Console.WriteLine("  Returning... ");
+                                    Console.ReadKey();
                                     continue;
                                 }
                                 default: {
-                                    Console.Clear();
                                     Console.WriteLine("  Ohps, please choose something in the menu");
                                     break;
                                 }
