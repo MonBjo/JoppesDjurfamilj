@@ -37,10 +37,10 @@ namespace JoppesDjurfamilj {
         }
 
         public Animal(int _age, string _name, string _favFood, string _breed) {
-            age = _age;
-            name = _name;
-            favFood = _favFood;
-            breed = _breed;
+            this.age = _age;
+            this.name = _name;
+            this.favFood = _favFood;
+            this.breed = _breed;
         }
         
     }

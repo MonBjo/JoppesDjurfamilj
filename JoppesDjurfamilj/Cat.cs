@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace JoppesDjurfamilj {
-    class Cat {
+    class Cat : Animal {
     }
 }

@@ -10,6 +10,7 @@ namespace JoppesDjurfamilj {
         private int age = 0;
         private string name = "Joppe";
         private List<Animal> pets = new List<Animal>();
+        
         private List<Ball> balls = new List<Ball>();
         private List<string> foods = new List<string>();
 
@@ -48,6 +49,7 @@ namespace JoppesDjurfamilj {
                                               "  [R] Return\n");
                             ConsoleKeyInfo userInputSubMenuStorage = Console.ReadKey(true);
                             switch(userInputSubMenuStorage.Key) {
+                                // Show foods
                                 case ConsoleKey.F: {
                                     // TODO: Show food
                                     Console.WriteLine("Food - amount - Pet/s who loves this");
@@ -56,6 +58,7 @@ namespace JoppesDjurfamilj {
                                     Console.ReadKey();
                                     break;
                                 }
+                                // Show balls
                                 case ConsoleKey.B: {
                                     // TODO: Show balls
                                     Console.WriteLine("Ball size - Ball texture - amount");
@@ -64,6 +67,7 @@ namespace JoppesDjurfamilj {
                                     Console.ReadKey();
                                     break;
                                 }
+                                // Return
                                 case ConsoleKey.R: {
                                     Console.WriteLine("  Returning... ");
                                     Console.ReadKey();
@@ -92,6 +96,7 @@ namespace JoppesDjurfamilj {
                         Console.Clear();
                         break;
                     }
+                    // Quit
                     case ConsoleKey.Q: {
                         Environment.Exit(0);
                         break;
@@ -104,7 +109,10 @@ namespace JoppesDjurfamilj {
                     }
                 }
             }
+        }
 
+        public void ListAnimals() {
+            pets.Add(new HouseCat(5, "Anna", "Chicken", "Norwegan Forest Cat"));
         }
     }
 }
