@@ -6,5 +6,11 @@ using System.Threading.Tasks;
 
 namespace JoppesDjurfamilj {
     class HouseCat : Cat {
+        public HouseCat(int _age, string _name, string _favFood, string _breed) : base(_age, _name, _favFood, _breed) {
+            this.age = _age;
+            this.name = _name;
+            this.favFood = _favFood;
+            this.breed = _breed;
+        }
     }
 }

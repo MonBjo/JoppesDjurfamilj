@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ConsoleTables;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,15 @@ namespace JoppesDjurfamilj {
         // Defining data
         private int age = 0;
         private string name = "Joppe";
-        private List<Animal> pets = new List<Animal>();
-        
         private List<Ball> balls = new List<Ball>();
         private List<string> foods = new List<string>();
+        private List<Animal> pets = new List<Animal> {
+            new Dog(5, "Alfons", "Pork", "Andalusier"),
+            new Puppy(8, "Bea", "Minced meat", "Terrier"),
+            new HouseCat(7, "Charles", "Mice", "Norwegan Forestcat"),
+            new Leopardus(3, "Diana", "Chiken", "Kodkod") // Yes thats legit
+        };
+        
 
 
 
@@ -30,10 +36,28 @@ namespace JoppesDjurfamilj {
                     case ConsoleKey.L: {
                         // TODO: List animals, info, choose animal to interact with
                         Console.Clear();
-                        Console.Write("Loads of pets\n" +
-                                      "Type the ");
-                        Console.WriteLine("============================\n" +
-                                          "Press any key to continue...");
+                        ListAnimals();
+                        while(true) { // TODO: Make the loop possible to break
+                            Console.WriteLine($"Do you want {name} to interact with a pet (Y/N)?: ");
+                            ConsoleKeyInfo userInputSubMenuPets = Console.ReadKey(true);
+                            switch(userInputSubMenuPets.Key) {
+                                case ConsoleKey.Y: {
+                                    Console.Clear();
+                                    ListAnimals();
+                                    Console.WriteLine("Please choose a pet by writing its index: ");
+                                    int petToInteractWith = Convert.ToInt32(Console.ReadLine());
+                                    break;
+                                }
+                                case ConsoleKey.N: {
+                                    Console.WriteLine("Then another time maybe");
+                                    break;
+                                }
+                                default: {
+                                    Console.WriteLine("Ohps, please choose Yes or No (Write Y or N)");
+                                    break;
+                                }
+                            }
+                        }
                         Console.ReadKey();
                         break;
                     }
@@ -112,7 +136,14 @@ namespace JoppesDjurfamilj {
         }
 
         public void ListAnimals() {
-            pets.Add(new HouseCat(5, "Anna", "Chicken", "Norwegan Forest Cat"));
+            int index = 0;
+            ConsoleTable tablePets = new ConsoleTable("index", "Name", "Age", "Breed", "Favourite food");
+            
+            foreach(Animal pet in pets) {
+                index++;
+                tablePets.AddRow(index, pet.name, pet.age, pet.breed, pet.favFood);
+            }
+            tablePets.Write(Format.Alternative);
         }
     }
 }
