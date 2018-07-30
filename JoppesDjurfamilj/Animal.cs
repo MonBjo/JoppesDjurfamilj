@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace JoppesDjurfamilj {
-    class Animal {
+    abstract class Animal {
         internal int age = 0;
         internal string name = "";
         internal string favFood = "";
@@ -42,6 +42,13 @@ namespace JoppesDjurfamilj {
             this.favFood = _favFood;
             this.breed = _breed;
         }
-        
+
+        public abstract void Interact(Ball ball);
+
+        public abstract void HungryAnimal();
+
+        public void Eat() {
+            Console.WriteLine("Pet is eating");
+        }
     }
 }

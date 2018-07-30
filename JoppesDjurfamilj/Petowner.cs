@@ -34,31 +34,99 @@ namespace JoppesDjurfamilj {
                 switch(userInputMainMenu.Key) {
                     //  List animals
                     case ConsoleKey.L: {
-                        // TODO: List animals, info, choose animal to interact with
                         Console.Clear();
                         ListAnimals();
-                        while(true) { // TODO: Make the loop possible to break
-                            Console.WriteLine($"Do you want {name} to interact with a pet (Y/N)?: ");
+
+                        bool continueLoop = true;
+                        while(continueLoop) {
+                            Console.Write($"Do you want {name} to interact with a pet (Y/N)?: ");
                             ConsoleKeyInfo userInputSubMenuPets = Console.ReadKey(true);
+
                             switch(userInputSubMenuPets.Key) {
+                                // Yes, interact with a pet
                                 case ConsoleKey.Y: {
                                     Console.Clear();
                                     ListAnimals();
-                                    Console.WriteLine("Please choose a pet by writing its index: ");
-                                    int petToInteractWith = Convert.ToInt32(Console.ReadLine());
+                                    int interactWithPet;
+                                    // Choose pet to interact with
+                                    while(true) {
+                                    Console.Write("Please choose a pet by writing its index: ");
+                                        try {
+                                            int userInputChoosePet = Convert.ToInt32(Console.ReadLine());
+
+                                            if(userInputChoosePet < 0 || userInputChoosePet > pets.Count) {
+                                                Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                                            }
+                                            else {
+                                                interactWithPet = userInputChoosePet - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
+                                                Console.WriteLine("You choosed {0} to be interacted with!", pets[interactWithPet].name);
+                                                break; //Sucessful input
+                                            }
+                                        }
+                                        catch(FormatException) {
+                                            Console.WriteLine("Please write only an integer");
+                                        }
+                                        catch(OverflowException) {
+                                            Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                                        }
+                                    }
+                                    // TODO: List animals, info, choose animal to interact with
+                                    Console.Clear();
+                                    continueLoop = true;
+                                    while(continueLoop) {
+                                        Console.WriteLine($"What do you want {name} to do with {pets[interactWithPet].name}?\n" +
+                                                           "[P] Play fetch\n" +
+                                                           "[F] Feed\n" +
+                                                           "[R] Return");
+                                        ConsoleKeyInfo userInputSubMenuInteract = Console.ReadKey(true);
+                                        switch(userInputSubMenuInteract.Key) {
+                                            // Play fetch
+                                            case ConsoleKey.P: {
+                                                Console.WriteLine("Play time!");
+                                                Fetch(interactWithPet);
+                                                break;
+                                            }
+                                            // Feed
+                                            case ConsoleKey.F: {
+                                                Console.WriteLine("Feeding time!");
+                                                Feed(interactWithPet);
+                                                break;
+                                            }
+                                            // Return
+                                            case ConsoleKey.R: {
+                                                continueLoop = false;
+                                                Console.WriteLine("============================\n" +
+                                                                  "Press any key to continue...");
+                                                break;
+                                            }
+                                            default: {
+                                                Console.WriteLine("Please choose something in the menu");
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    Console.WriteLine("============================\n" +
+                                                      "Press any key to continue...");
+                                    Console.ReadKey(true);
                                     break;
                                 }
+                                // No, don't interact with a pet
                                 case ConsoleKey.N: {
-                                    Console.WriteLine("Then another time maybe");
+                                    continueLoop = false;
+                                    Console.WriteLine("\nThen another time maybe" +
+                                                      "\n============================" +
+                                                      "\nPress any key to continue...");
+                                    Console.ReadKey(true);
                                     break;
                                 }
                                 default: {
-                                    Console.WriteLine("Ohps, please choose Yes or No (Write Y or N)");
+                                    Console.WriteLine("\nOhps, please choose Yes or No (Write Y or N)");
                                     break;
                                 }
                             }
+
                         }
-                        Console.ReadKey();
                         break;
                     }
                     //  Storage
@@ -75,7 +143,7 @@ namespace JoppesDjurfamilj {
                             switch(userInputSubMenuStorage.Key) {
                                 // Show foods
                                 case ConsoleKey.F: {
-                                    // TODO: Show food
+                                    // TODO: Show food based on favFood in pets list
                                     Console.WriteLine("Food - amount - Pet/s who loves this");
                                     Console.WriteLine("============================\n" +
                                                       "Press any key to continue...");
@@ -144,6 +212,14 @@ namespace JoppesDjurfamilj {
                 tablePets.AddRow(index, pet.name, pet.age, pet.breed, pet.favFood);
             }
             tablePets.Write(Format.Alternative);
+        }
+
+        public void Fetch(int indexPet) {
+
+        }
+
+        public void Feed(int indexPet) {
+
         }
     }
 }
