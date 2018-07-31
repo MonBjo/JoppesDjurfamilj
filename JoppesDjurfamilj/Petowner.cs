@@ -16,7 +16,8 @@ namespace JoppesDjurfamilj {
             new Dog(5, "Alfons", "Pork", "Andalusier"),
             new Puppy(8, "Bea", "Minced meat", "Terrier"),
             new HouseCat(7, "Charles", "Mice", "Norwegan Forestcat"),
-            new Leopardus(3, "Diana", "Chiken", "Kodkod") // Yes thats legit
+            new Leopardus(3, "Diana", "Chiken", "Kodkod"), // Yes thats a legit breed
+            new Dog(4, "Eevee", "Minced meat", "Corgie")
         };
         
 
@@ -70,7 +71,7 @@ namespace JoppesDjurfamilj {
                                             Console.WriteLine("Please write an integer between 1 and " + pets.Count);
                                         }
                                     }
-                                    // TODO: List animals, info, choose animal to interact with
+                                    
                                     Console.Clear();
                                     continueLoop = true;
                                     while(continueLoop) {
@@ -143,8 +144,7 @@ namespace JoppesDjurfamilj {
                             switch(userInputSubMenuStorage.Key) {
                                 // Show foods
                                 case ConsoleKey.F: {
-                                    // TODO: Show food based on favFood in pets list
-                                    Console.WriteLine("Food - amount - Pet/s who loves this");
+                                    ListFoods();
                                     Console.WriteLine("============================\n" +
                                                       "Press any key to continue...");
                                     Console.ReadKey();
@@ -205,21 +205,34 @@ namespace JoppesDjurfamilj {
 
         public void ListAnimals() {
             int index = 0;
-            ConsoleTable tablePets = new ConsoleTable("index", "Name", "Age", "Breed", "Favourite food");
+            ConsoleTable table = new ConsoleTable("index", "Name", "Age", "Breed", "Favourite food");
             
             foreach(Animal pet in pets) {
+                table.AddRow(index, pet.name, pet.age, pet.breed, pet.favFood);
                 index++;
-                tablePets.AddRow(index, pet.name, pet.age, pet.breed, pet.favFood);
             }
-            tablePets.Write(Format.Alternative);
+            table.Write(Format.Alternative);
+        }
+
+        public void ListFoods() {
+            ConsoleTable table = new ConsoleTable("Food", "Pets who loves this");
+            for(int i = 0; i > pets.Count - 1; i++) {
+                // whyyyyyyy not working. 
+                table.AddRow(pets[i].favFood, pets[i].name);
+            }
+            table.Write(Format.Alternative);
+        }
+
+        public void ListBalls() {
+
         }
 
         public void Fetch(int indexPet) {
-
+            //TODO: Print something, call the Interact() method in the Animal class
         }
 
         public void Feed(int indexPet) {
-
+            //TODO: Print something, list foods, ask what to give, call Eat() method in Animal class.
         }
     }
 }

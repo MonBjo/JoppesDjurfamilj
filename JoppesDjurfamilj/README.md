@@ -7,9 +7,24 @@ Att interagera med djuren kan man göra genom att leka med dom eller mata dom. D
 #### Att navigera programmet
 För att navigera i programmet så används enbart tangentbordet.
 
-Dom olika menyerna 
+När du skall göra ett menyval så behöver du endast trycka ner en tangent för en bokstav så kommer du vidare automatiskt. Den bokstav som behöver tryckas ner för respektive menyval står först på raden inom hakparanteserna.\
+Exempel:
+```
+ett exempel
+på meny
+blablabla
+```
 
-Förklara menyvalen
+I vissa delar av programmet så finns möjligheten att skriva mer än ett tecken och då måste det avslutas med att trycka ner ENTER. Exempel:
+```
+ett exempel
+på när man behöver
+skriva lite 
+i programmet
+```
+
+*Dom olika menyerna och vad som kan göras där
+En guide igenom programmet helt enkelt.*
 
 
 > Enligt kunskapskraven så ska man kunna dokumentera sitt arbete. Det innebär att ni ska kunna lämna över en 

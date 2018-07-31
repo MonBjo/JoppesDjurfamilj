@@ -12,5 +12,13 @@ namespace JoppesDjurfamilj {
             this.favFood = _favFood;
             this.breed = _breed;
         }
+
+        public override void Interact(Ball ball) {
+            Console.WriteLine("Cat play with ball");
+        }
+
+        public override void HungryAnimal() {
+            throw new NotImplementedException();
+        }
     }
 }
