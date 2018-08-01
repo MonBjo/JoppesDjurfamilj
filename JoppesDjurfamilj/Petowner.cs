@@ -10,14 +10,18 @@ namespace JoppesDjurfamilj {
         // Defining data
         private int age = 0;
         private string name = "Joppe";
-        private List<Ball> balls = new List<Ball>();
         private List<string> foods = new List<string>();
         private List<Animal> pets = new List<Animal> {
             new Dog(5, "Alfons", "Pork", "Andalusier"),
             new Puppy(8, "Bea", "Minced meat", "Terrier"),
             new HouseCat(7, "Charles", "Mice", "Norwegan Forestcat"),
             new Leopardus(3, "Diana", "Chiken", "Kodkod"), // Yes thats a legit breed
-            new Dog(4, "Eevee", "Minced meat", "Corgie")
+            new Dog(4, "Eevee", "Minced meat", "Corgie"),
+            new Leopardus(9, "Frank", "Pork", "Kodkod"),
+            new Puppy(1, "George", "Pork", "Poodle")
+        };
+        private List<Ball> balls = new List<Ball>(){
+            new Ball("Red", "Smooth", 4, 10)
         };
         
 
@@ -215,16 +219,42 @@ namespace JoppesDjurfamilj {
         }
 
         public void ListFoods() {
+            Console.Clear();
             ConsoleTable table = new ConsoleTable("Food", "Pets who loves this");
-            for(int i = 0; i > pets.Count - 1; i++) {
-                // whyyyyyyy not working. 
-                table.AddRow(pets[i].favFood, pets[i].name);
+
+            // Load foods-list
+            foreach(Animal pet in pets) {
+                bool isEqual = true;
+                foreach(string food in foods) {
+                    if(food == pet.favFood) {
+                        isEqual = false;
+                    }
+                }
+                if(isEqual) {
+                    foods.Add(pet.FavFood);
+                }
+            }
+            // Load table
+            foreach(string food in foods) {
+            StringBuilder petsFavFood = new StringBuilder();
+                foreach(Animal pet in pets) {
+                    if(food == pet.favFood) {
+                        petsFavFood.Append(pet.name);
+                        petsFavFood.Append(", ");
+                    }
+                }
+                petsFavFood.Remove(petsFavFood.Length - 2, 2);
+                table.AddRow(food, petsFavFood);
             }
             table.Write(Format.Alternative);
         }
 
         public void ListBalls() {
-
+            ConsoleTable table = new ConsoleTable(/*stuff*/);
+            foreach(Ball ball in balls) {
+                table.AddRow(/*stuff*/);
+            }
+            table.Write(Format.Alternative);
         }
 
         public void Fetch(int indexPet) {
