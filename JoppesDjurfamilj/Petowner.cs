@@ -21,7 +21,12 @@ namespace JoppesDjurfamilj {
             new Puppy(1, "George", "Pork", "Poodle")
         };
         private List<Ball> balls = new List<Ball>(){
-            new Ball("Red", "Smooth", 4, 10)
+            new Ball("Red", "Smooth", 4, 30),
+            new Ball("Blue", "Wavey", 6, 30),
+            new Ball("Pink", "Super soft", 6, 30),
+            new Ball("Green", "Grass like", 2, 30),
+            new Ball("Yellow", "Knobby", 3, 30),
+            new Ball("Green", "Hard", 5, 30)
         };
         
 
@@ -148,6 +153,7 @@ namespace JoppesDjurfamilj {
                             switch(userInputSubMenuStorage.Key) {
                                 // Show foods
                                 case ConsoleKey.F: {
+                                    Console.Clear();
                                     ListFoods();
                                     Console.WriteLine("============================\n" +
                                                       "Press any key to continue...");
@@ -156,8 +162,8 @@ namespace JoppesDjurfamilj {
                                 }
                                 // Show balls
                                 case ConsoleKey.B: {
-                                    // TODO: Show balls
-                                    Console.WriteLine("Ball size - Ball texture - amount");
+                                    Console.Clear();
+                                    ListBalls();
                                     Console.WriteLine("============================\n" +
                                                       "Press any key to continue...");
                                     Console.ReadKey();
@@ -208,18 +214,15 @@ namespace JoppesDjurfamilj {
         }
 
         public void ListAnimals() {
-            int index = 0;
-            ConsoleTable table = new ConsoleTable("index", "Name", "Age", "Breed", "Favourite food");
+            ConsoleTable table = new ConsoleTable("Name", "Age", "Breed", "Favourite food");
             
             foreach(Animal pet in pets) {
-                table.AddRow(index, pet.name, pet.age, pet.breed, pet.favFood);
-                index++;
+                table.AddRow(pet.name, pet.age, pet.breed, pet.favFood);
             }
             table.Write(Format.Alternative);
         }
 
         public void ListFoods() {
-            Console.Clear();
             ConsoleTable table = new ConsoleTable("Food", "Pets who loves this");
 
             // Load foods-list
@@ -250,9 +253,11 @@ namespace JoppesDjurfamilj {
         }
 
         public void ListBalls() {
-            ConsoleTable table = new ConsoleTable(/*stuff*/);
+            int index = 0;
+            ConsoleTable table = new ConsoleTable("Index", "Color", "Size", "Texture", "Quality");
             foreach(Ball ball in balls) {
-                table.AddRow(/*stuff*/);
+                table.AddRow(index, ball.Color, ball.Size, ball.Texture, ball.Quality);
+                index++;
             }
             table.Write(Format.Alternative);
         }

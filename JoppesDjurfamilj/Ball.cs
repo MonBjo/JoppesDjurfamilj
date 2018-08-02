@@ -8,8 +8,8 @@ namespace JoppesDjurfamilj {
     class Ball {
         private string color = "";
         private string texture = "";
-        private int size = 5;
-        private int quality = 30;
+        private int size = 6; // Max size in cm
+        private int quality = 30; // Max quality
 
         public string Color {
             get { return color; }
