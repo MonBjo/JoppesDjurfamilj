@@ -32,8 +32,9 @@ namespace JoppesDjurfamilj {
             set { value = breed; }
         }
 
-        public bool Hungry {
+        public bool Hungry { // TODO: Make the bool random for every call
             get { return hungry; }
+            set { hungry = value; }
         }
 
         public Animal(int _age, string _name, string _favFood, string _breed) {

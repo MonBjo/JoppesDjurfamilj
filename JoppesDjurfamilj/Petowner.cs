@@ -56,8 +56,8 @@ namespace JoppesDjurfamilj {
                                 // Yes, interact with a pet
                                 case ConsoleKey.Y: {
                                     Console.Clear();
-                                    ListAnimals();
                                     int interactWithPet;
+                                    ListAnimals();
                                     // Choose pet to interact with
                                     while(true) {
                                     Console.Write("Please choose a pet by writing its index: ");
@@ -92,14 +92,20 @@ namespace JoppesDjurfamilj {
                                         switch(userInputSubMenuInteract.Key) {
                                             // Play fetch
                                             case ConsoleKey.P: {
-                                                Console.WriteLine("Play time!");
+                                                Console.Clear();
                                                 Fetch(interactWithPet);
+                                                Console.ReadKey(true);
+                                                Console.WriteLine("============================\n" +
+                                                                  "Press any key to continue...");
                                                 break;
                                             }
                                             // Feed
                                             case ConsoleKey.F: {
-                                                Console.WriteLine("Feeding time!");
+                                                Console.Clear();
                                                 Feed(interactWithPet);
+                                                Console.ReadKey(true);
+                                                Console.WriteLine("============================\n" +
+                                                                  "Press any key to continue...");
                                                 break;
                                             }
                                             // Return
@@ -115,10 +121,6 @@ namespace JoppesDjurfamilj {
                                             }
                                         }
                                     }
-
-                                    Console.WriteLine("============================\n" +
-                                                      "Press any key to continue...");
-                                    Console.ReadKey(true);
                                     break;
                                 }
                                 // No, don't interact with a pet
@@ -214,16 +216,19 @@ namespace JoppesDjurfamilj {
         }
 
         public void ListAnimals() {
-            ConsoleTable table = new ConsoleTable("Name", "Age", "Breed", "Favourite food");
-            
+            ConsoleTable table = new ConsoleTable("Index", "Name", "Age", "Breed", "Favourite food");
+            int index = 0;
+
             foreach(Animal pet in pets) {
-                table.AddRow(pet.name, pet.age, pet.breed, pet.favFood);
+                index++;
+                table.AddRow(index, pet.name, pet.age, pet.breed, pet.favFood);
             }
             table.Write(Format.Alternative);
         }
 
         public void ListFoods() {
-            ConsoleTable table = new ConsoleTable("Food", "Pets who loves this");
+            ConsoleTable table = new ConsoleTable("Index", "Food", "Pets who loves this");
+            int index = 0;
 
             // Load foods-list
             foreach(Animal pet in pets) {
@@ -246,8 +251,9 @@ namespace JoppesDjurfamilj {
                         petsFavFood.Append(", ");
                     }
                 }
+                index++;
                 petsFavFood.Remove(petsFavFood.Length - 2, 2);
-                table.AddRow(food, petsFavFood);
+                table.AddRow(index, food, petsFavFood);
             }
             table.Write(Format.Alternative);
         }
@@ -256,8 +262,8 @@ namespace JoppesDjurfamilj {
             int index = 0;
             ConsoleTable table = new ConsoleTable("Index", "Color", "Size", "Texture", "Quality");
             foreach(Ball ball in balls) {
-                table.AddRow(index, ball.Color, ball.Size, ball.Texture, ball.Quality);
                 index++;
+                table.AddRow(index, ball.Color, ball.Size, ball.Texture, ball.Quality);
             }
             table.Write(Format.Alternative);
         }
@@ -267,6 +273,12 @@ namespace JoppesDjurfamilj {
         }
 
         public void Feed(int indexPet) {
+            if(pets[indexPet].hungry) {
+                Console.WriteLine("true - pet is hungry");
+            }
+            else {
+                Console.WriteLine("false - pet is not hungry");
+            }
             //TODO: Print something, list foods, ask what to give, call Eat() method in Animal class.
         }
     }
