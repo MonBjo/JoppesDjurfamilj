@@ -84,6 +84,7 @@ namespace JoppesDjurfamilj {
                                     Console.Clear();
                                     continueLoop = true;
                                     while(continueLoop) {
+                                        Console.Clear();
                                         Console.WriteLine($"What do you want {name} to do with {pets[interactWithPet].name}?\n" +
                                                            "[P] Play fetch\n" +
                                                            "[F] Feed\n" +
@@ -94,18 +95,18 @@ namespace JoppesDjurfamilj {
                                             case ConsoleKey.P: {
                                                 Console.Clear();
                                                 Fetch(interactWithPet);
-                                                Console.ReadKey(true);
                                                 Console.WriteLine("============================\n" +
                                                                   "Press any key to continue...");
+                                                Console.ReadKey(true);
                                                 break;
                                             }
                                             // Feed
                                             case ConsoleKey.F: {
                                                 Console.Clear();
                                                 Feed(interactWithPet);
-                                                Console.ReadKey(true);
                                                 Console.WriteLine("============================\n" +
                                                                   "Press any key to continue...");
+                                                Console.ReadKey(true);
                                                 break;
                                             }
                                             // Return
@@ -221,7 +222,7 @@ namespace JoppesDjurfamilj {
 
             foreach(Animal pet in pets) {
                 index++;
-                table.AddRow(index, pet.name, pet.age, pet.breed, pet.favFood);
+                table.AddRow(index, pet.Name, pet.Age, pet.Breed, pet.FavFood);
             }
             table.Write(Format.Alternative);
         }
@@ -247,7 +248,7 @@ namespace JoppesDjurfamilj {
             StringBuilder petsFavFood = new StringBuilder();
                 foreach(Animal pet in pets) {
                     if(food == pet.favFood) {
-                        petsFavFood.Append(pet.name);
+                        petsFavFood.Append(pet.Name);
                         petsFavFood.Append(", ");
                     }
                 }
@@ -269,17 +270,45 @@ namespace JoppesDjurfamilj {
         }
 
         public void Fetch(int indexPet) {
+            Console.WriteLine("Coming soon");
             //TODO: Print something, call the Interact() method in the Animal class
         }
 
-        public void Feed(int indexPet) {
-            if(pets[indexPet].hungry) {
-                Console.WriteLine("true - pet is hungry");
+        public void Feed(int petIndex) {
+            pets[petIndex].TestHunger();
+
+            if(!pets[petIndex].Hungry) {
+                Console.WriteLine(pets[petIndex].Name + " is not hungry");
             }
             else {
-                Console.WriteLine("false - pet is not hungry");
+                ListFoods();
+                int foodIndex;
+
+                while(true) {
+                    Console.Write("Please choose a food by typing it's index: ");
+
+                    try {
+                        int userInputChooseFood = Convert.ToInt32(Console.ReadLine());
+
+                        if(userInputChooseFood < 0 || userInputChooseFood > foods.Count) {
+                            Console.WriteLine("Please write an integer between 1 and " + foods.Count);
+                        }
+                        else {
+                            foodIndex = userInputChooseFood - 1;
+                            Console.WriteLine("{0} tries to feed {1} with {2}", name, pets[petIndex].Name, foods[foodIndex]);
+                            pets[petIndex].Eat();
+                            break; //Sucessful input
+                        }
+                    }
+                    catch(FormatException) {
+                        Console.WriteLine("Please write only an integer");
+                    }
+                    catch(OverflowException) {
+                        Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                    }
+                }
+
             }
-            //TODO: Print something, list foods, ask what to give, call Eat() method in Animal class.
         }
     }
 }
