@@ -24,5 +24,10 @@ namespace JoppesDjurfamilj {
             throw new NotImplementedException();
             //TODO: reacts on food it dislikes
         }
+
+        public override string ToString() {
+            return $"{Name}, Leopardus";
+        }
+
     }
 }

@@ -150,7 +150,7 @@ namespace JoppesDjurfamilj {
 
             foreach(Animal pet in pets) {
                 index++;
-                table.AddRow(index, pet.Name, pet.Age, pet.Breed);
+                table.AddRow(index, pet.Name, pet.AgeString(), pet.Breed);
             }
             table.Write(Format.Alternative);
         }
@@ -213,7 +213,7 @@ namespace JoppesDjurfamilj {
                     }
                     else {
                         interactWithPet = userInputChoosePet - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
-                        Console.WriteLine("You choosed {0} to be interacted with!", pets[interactWithPet].name);
+                        Console.WriteLine("You choose to play with {0}!", pets[interactWithPet].name);
                         break; //Sucessful input
                     }
                 }
@@ -268,7 +268,7 @@ namespace JoppesDjurfamilj {
                     }
                     else {
                         petIndex = userInputChoosePet - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
-                        Console.WriteLine("You choosed {0} to be interacted with!", pets[petIndex].name);
+                        Console.WriteLine("You choose to feed {0}!", pets[petIndex].name);
                         break; //Sucessful input
                     }
                 }

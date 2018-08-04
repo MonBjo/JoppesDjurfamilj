@@ -13,22 +13,22 @@ namespace JoppesDjurfamilj {
 
         public string Color {
             get { return color; }
-            set { value = color; }
+            set { color = value; }
         }
 
         public string Texture {
             get { return texture; }
-            set { value = texture; }
+            set { texture = value; }
         }
 
         public int Size {
             get { return size; }
-            set { value = size; }
+            set { size = value; }
         }
 
         public int Quality {
             get { return quality; }
-            set { value = quality; }
+            set { quality = value; }
         }
 
         public Ball(string _color, string _texture, int _size, int _quality) {
@@ -38,5 +38,10 @@ namespace JoppesDjurfamilj {
             quality = _quality;
 
         }
+
+        public override string ToString() {
+            return $"{color}, {texture} ball";
+        }
+
     }
 }
