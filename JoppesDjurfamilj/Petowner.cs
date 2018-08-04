@@ -37,6 +37,8 @@ namespace JoppesDjurfamilj {
                 Console.Clear();
                 Console.WriteLine("=== Welcome to {0}'s Family of Pets ===", name);
                 Console.WriteLine("[L] List pets\n" +
+                                  "[P] Play fetch\n" +
+                                  "[F] Feed a pet\n" +
                                   "[S] Storage\n" +
                                   "[A] About this program\n" +
                                   "[Q] Quit\n");
@@ -46,105 +48,30 @@ namespace JoppesDjurfamilj {
                     case ConsoleKey.L: {
                         Console.Clear();
                         ListAnimals();
-
-                        bool continueLoop = true;
-                        while(continueLoop) {
-                            Console.Write($"Do you want {name} to interact with a pet (Y/N)?: ");
-                            ConsoleKeyInfo userInputSubMenuPets = Console.ReadKey(true);
-
-                            switch(userInputSubMenuPets.Key) {
-                                // Yes, interact with a pet
-                                case ConsoleKey.Y: {
-                                    Console.Clear();
-                                    int interactWithPet;
-                                    ListAnimals();
-                                    // Choose pet to interact with
-                                    while(true) {
-                                    Console.Write("Please choose a pet by writing its index: ");
-                                        try {
-                                            int userInputChoosePet = Convert.ToInt32(Console.ReadLine());
-
-                                            if(userInputChoosePet < 0 || userInputChoosePet > pets.Count) {
-                                                Console.WriteLine("Please write an integer between 1 and " + pets.Count);
-                                            }
-                                            else {
-                                                interactWithPet = userInputChoosePet - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
-                                                Console.WriteLine("You choosed {0} to be interacted with!", pets[interactWithPet].name);
-                                                break; //Sucessful input
-                                            }
-                                        }
-                                        catch(FormatException) {
-                                            Console.WriteLine("Please write only an integer");
-                                        }
-                                        catch(OverflowException) {
-                                            Console.WriteLine("Please write an integer between 1 and " + pets.Count);
-                                        }
-                                    }
-                                    
-                                    Console.Clear();
-                                    continueLoop = true;
-                                    while(continueLoop) {
-                                        Console.Clear();
-                                        Console.WriteLine($"What do you want {name} to do with {pets[interactWithPet].name}?\n" +
-                                                           "[P] Play fetch\n" +
-                                                           "[F] Feed\n" +
-                                                           "[R] Return");
-                                        ConsoleKeyInfo userInputSubMenuInteract = Console.ReadKey(true);
-                                        switch(userInputSubMenuInteract.Key) {
-                                            // Play fetch
-                                            case ConsoleKey.P: {
-                                                Console.Clear();
-                                                Fetch(interactWithPet);
-                                                Console.WriteLine("============================\n" +
-                                                                  "Press any key to continue...");
-                                                Console.ReadKey(true);
-                                                break;
-                                            }
-                                            // Feed
-                                            case ConsoleKey.F: {
-                                                Console.Clear();
-                                                Feed(interactWithPet);
-                                                Console.WriteLine("============================\n" +
-                                                                  "Press any key to continue...");
-                                                Console.ReadKey(true);
-                                                break;
-                                            }
-                                            // Return
-                                            case ConsoleKey.R: {
-                                                continueLoop = false;
-                                                Console.WriteLine("============================\n" +
-                                                                  "Press any key to continue...");
-                                                break;
-                                            }
-                                            default: {
-                                                Console.WriteLine("Please choose something in the menu");
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    break;
-                                }
-                                // No, don't interact with a pet
-                                case ConsoleKey.N: {
-                                    continueLoop = false;
-                                    Console.WriteLine("\nThen another time maybe" +
-                                                      "\n============================" +
-                                                      "\nPress any key to continue...");
-                                    Console.ReadKey(true);
-                                    break;
-                                }
-                                default: {
-                                    Console.WriteLine("\nOhps, please choose Yes or No (Write Y or N)");
-                                    break;
-                                }
-                            }
-
-                        }
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey(true);
+                        break;
+                    }
+                    // Play fetch
+                    case ConsoleKey.P: {
+                        Console.Clear();
+                        Fetch();
+                        Console.WriteLine("============================\n" +
+                                          "Press any key to continue...");
+                        Console.ReadKey(true);
+                        break;
+                    }
+                    // Feed a pet
+                    case ConsoleKey.F: {
+                        Console.Clear();
+                        Feed();
+                        Console.WriteLine("============================\n" +
+                                          "Press any key to continue...");
+                        Console.ReadKey(true);
                         break;
                     }
                     //  Storage
                     case ConsoleKey.S: {
-                        // TODO: Undermenu to show availabe food and balls.
                         while(true) {
                             Console.WriteLine("=== The Storage ===\n" +
                                              $"In {name}'s stoage you can find\n" +
@@ -167,6 +94,7 @@ namespace JoppesDjurfamilj {
                                 case ConsoleKey.B: {
                                     Console.Clear();
                                     ListBalls();
+                                    // TODO: Check ball
                                     Console.WriteLine("============================\n" +
                                                       "Press any key to continue...");
                                     Console.ReadKey();
@@ -217,12 +145,12 @@ namespace JoppesDjurfamilj {
         }
 
         public void ListAnimals() {
-            ConsoleTable table = new ConsoleTable("Index", "Name", "Age", "Breed", "Favourite food");
+            ConsoleTable table = new ConsoleTable("Index", "Name", "Age", "Breed");
             int index = 0;
 
             foreach(Animal pet in pets) {
                 index++;
-                table.AddRow(index, pet.Name, pet.Age, pet.Breed, pet.FavFood);
+                table.AddRow(index, pet.Name, pet.Age, pet.Breed);
             }
             table.Write(Format.Alternative);
         }
@@ -269,46 +197,115 @@ namespace JoppesDjurfamilj {
             table.Write(Format.Alternative);
         }
 
-        public void Fetch(int indexPet) {
-            Console.WriteLine("Coming soon");
+        public void Fetch() {
             //TODO: Print something, call the Interact() method in the Animal class
-        }
+            Console.Clear();
+            int interactWithPet;
+            ListAnimals();
+            // Choose pet to interact with
+            while(true) {
+                Console.Write("Please choose a pet by writing its index: ");
+                try {
+                    int userInputChoosePet = Convert.ToInt32(Console.ReadLine());
 
-        public void Feed(int petIndex) {
-            pets[petIndex].TestHunger();
-
-            if(!pets[petIndex].Hungry) {
-                Console.WriteLine(pets[petIndex].Name + " is not hungry");
-            }
-            else {
-                ListFoods();
-                int foodIndex;
-
-                while(true) {
-                    Console.Write("Please choose a food by typing it's index: ");
-
-                    try {
-                        int userInputChooseFood = Convert.ToInt32(Console.ReadLine());
-
-                        if(userInputChooseFood < 0 || userInputChooseFood > foods.Count) {
-                            Console.WriteLine("Please write an integer between 1 and " + foods.Count);
-                        }
-                        else {
-                            foodIndex = userInputChooseFood - 1;
-                            Console.WriteLine("{0} tries to feed {1} with {2}", name, pets[petIndex].Name, foods[foodIndex]);
-                            pets[petIndex].Eat();
-                            break; //Sucessful input
-                        }
-                    }
-                    catch(FormatException) {
-                        Console.WriteLine("Please write only an integer");
-                    }
-                    catch(OverflowException) {
+                    if(userInputChoosePet < 0 || userInputChoosePet > pets.Count) {
                         Console.WriteLine("Please write an integer between 1 and " + pets.Count);
                     }
+                    else {
+                        interactWithPet = userInputChoosePet - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
+                        Console.WriteLine("You choosed {0} to be interacted with!", pets[interactWithPet].name);
+                        break; //Sucessful input
+                    }
                 }
-
+                catch(FormatException) {
+                    Console.WriteLine("Please write only an integer");
+                }
+                catch(OverflowException) {
+                    Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                }
             }
+
+            Console.Clear();
+            ListBalls();
+            int indexBall;
+            while(true) {
+                Console.Write("Please choose a ball by writing its index: ");
+                try {
+                    int userInputChooseBall = Convert.ToInt32(Console.ReadLine());
+
+                    if(userInputChooseBall < 0 || userInputChooseBall > pets.Count) {
+                        Console.WriteLine("Please write an integer between 1 and " + balls.Count);
+                    }
+                    else {
+                        indexBall = userInputChooseBall - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
+                        Console.WriteLine("blah"); // TODO: Write something clever
+                        break; //Sucessful input
+                    }
+                }
+                catch(FormatException) {
+                    Console.WriteLine("Please write only an integer");
+                }
+                catch(OverflowException) {
+                    Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                }
+            }
+
+            //TODO: Check ball first?
+        }
+
+        public void Feed() {
+            Console.Clear();
+            int petIndex;
+            ListAnimals();
+            // Choose pet to interact with
+            while(true) {
+                Console.Write("Please choose a pet by writing its index: ");
+                try {
+                    int userInputChoosePet = Convert.ToInt32(Console.ReadLine());
+
+                    if(userInputChoosePet < 0 || userInputChoosePet > pets.Count) {
+                        Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                    }
+                    else {
+                        petIndex = userInputChoosePet - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
+                        Console.WriteLine("You choosed {0} to be interacted with!", pets[petIndex].name);
+                        break; //Sucessful input
+                    }
+                }
+                catch(FormatException) {
+                    Console.WriteLine("Please write only an integer");
+                }
+                catch(OverflowException) {
+                    Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                }
+            }
+
+            ListFoods();
+            int foodIndex;
+            while(true) {
+                Console.Write("Please choose a food by typing it's index: ");
+
+                try {
+                    int userInputChooseFood = Convert.ToInt32(Console.ReadLine());
+
+                    if(userInputChooseFood < 0 || userInputChooseFood > foods.Count) {
+                        Console.WriteLine("Please write an integer between 1 and " + foods.Count);
+                    }
+                    else {
+                        foodIndex = userInputChooseFood - 1;
+                        Console.WriteLine("{0} tries to feed {1} with {2}", name, pets[petIndex].Name, foods[foodIndex]);
+                        pets[petIndex].Eat(foods[foodIndex]);
+                        break; //Sucessful input
+                    }
+                }
+                catch(FormatException) {
+                    Console.WriteLine("Please write only an integer");
+                }
+                catch(OverflowException) {
+                    Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                }
+            }
+
         }
     }
 }

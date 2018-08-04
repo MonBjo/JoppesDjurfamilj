@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace JoppesDjurfamilj {
     abstract class Animal {
-        Random random = new Random();
         internal int age = 0;
         internal string name = "";
         internal string favFood = "";
         internal string breed = "";
-        internal bool hungry = false;
+        internal bool hungry = true;
 
         public int Age {
             get { return age; }
@@ -38,16 +37,6 @@ namespace JoppesDjurfamilj {
             set { hungry = value; }
         }
 
-       public void TestHunger() {
-            int boolean = random.Next(2);
-            if(boolean == 0) {
-                Hungry = false;
-            }
-            else {
-                Hungry = true;
-            }
-        }
-
         public Animal(int _age, string _name, string _favFood, string _breed) {
             this.age = _age;
             this.name = _name;
@@ -59,13 +48,21 @@ namespace JoppesDjurfamilj {
 
         public abstract void HungryAnimal();
 
-        public void Eat() {
-            //if(foods[foodIndex] == pets[petIndex].FavFood) {
-            //    pets[petIndex].Eat();
-            //}
-            //else {
-            //    pets[petIndex].HungryAnimal();
-            //}
+        public void Eat(string food) {
+            if(!Hungry) {
+                Console.WriteLine(Name + " is not hungry");
+            }
+            else {
+
+                if(food == FavFood) {
+                    Console.WriteLine("Accepts food"); //TODO: Write something better
+                    Hungry = false;
+                }
+                else {
+                    HungryAnimal();
+                }
+
+            }
         }
     }
 }

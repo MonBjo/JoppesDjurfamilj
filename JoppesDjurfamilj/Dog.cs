@@ -14,11 +14,15 @@ namespace JoppesDjurfamilj {
         }
 
         public override void Interact(Ball ball) {
-            Console.WriteLine("Dog play with ball");
+            throw new NotImplementedException();
+            //TODO: if hungry -> doesn't want to play
+            //TODO: if not hungry -> Want to play -> good ball -> plays -> becomes hungry
+            //TODO: if not hungry -> Want to play -> bad ball -> doesn't play
         }
 
         public override void HungryAnimal() {
             throw new NotImplementedException();
+            //TODO: reacts on food it dislikes
         }
     }
 }
