@@ -21,8 +21,15 @@ namespace JoppesDjurfamilj {
         }
 
         public override void HungryAnimal() {
-            throw new NotImplementedException();
-            //TODO: reacts on food it dislikes
+            Console.WriteLine("{0} whines a bit before walking away", Name);
+            int catchMice = random.Next(3);
+            if(catchMice == 0) {
+                Hungry = true;
+            }
+            else {
+                Console.WriteLine("... after a few minutes {0} is back with a mice", Name);
+                Hungry = false;
+            }
         }
 
         public override string ToString() {

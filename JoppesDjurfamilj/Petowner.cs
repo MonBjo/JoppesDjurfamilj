@@ -135,7 +135,6 @@ namespace JoppesDjurfamilj {
                         break;
                     }
                     default: {
-                        // TODO: If the user don't make a menu choise...
                         Console.Clear();
                         Console.WriteLine("Ohps, please choose something in the menu");
                         break;
@@ -198,7 +197,6 @@ namespace JoppesDjurfamilj {
         }
 
         public void Fetch() {
-            //TODO: Print something, call the Interact() method in the Animal class
             Console.Clear();
             int interactWithPet;
             ListAnimals();
@@ -238,7 +236,6 @@ namespace JoppesDjurfamilj {
                     }
                     else {
                         indexBall = userInputChooseBall - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
-                        Console.WriteLine("blah"); // TODO: Write something clever
                         break; //Sucessful input
                     }
                 }
@@ -250,7 +247,14 @@ namespace JoppesDjurfamilj {
                 }
             }
 
+            Console.WriteLine($"Do you want {name} to check on the ball first? (Y/N) ");
+
+            
             //TODO: Check ball first?
+        }
+
+        public void CheckBall() {
+
         }
 
         public void Feed() {

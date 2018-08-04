@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace JoppesDjurfamilj {
     abstract class Animal {
+        // Defining data
+        internal Random random = new Random();
         internal int age = 0;
         internal string name = "";
         internal string favFood = "";
-        internal int favBall = "";
         internal string breed = "";
         internal bool hungry = true;
 
@@ -26,11 +27,6 @@ namespace JoppesDjurfamilj {
         public string FavFood {
             get { return favFood; }
             set { favFood = value; }
-        }
-
-        public int FavBall {
-            get { return favBall; }
-            set { favBall = value; }
         }
 
         public string Breed {

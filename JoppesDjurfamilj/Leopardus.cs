@@ -20,11 +20,6 @@ namespace JoppesDjurfamilj {
             //TODO: if not hungry -> Want to play -> bad ball -> doesn't play
         }
 
-        public override void HungryAnimal() {
-            throw new NotImplementedException();
-            //TODO: reacts on food it dislikes
-        }
-
         public override string ToString() {
             return $"{Name}, Leopardus";
         }

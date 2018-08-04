@@ -12,7 +12,6 @@ namespace JoppesDjurfamilj {
             this.favFood = _favFood;
             this.breed = _breed; 
         }
-        // TODO: Puppy age is in month and not years!
 
         public override void Interact(Ball ball) {
             throw new NotImplementedException();
@@ -22,8 +21,7 @@ namespace JoppesDjurfamilj {
         }
 
         public override void HungryAnimal() {
-            throw new NotImplementedException();
-            //TODO: reacts on food it dislikes
+            Console.WriteLine("{0} whimpers and turns around, pretending there is no food.", Name);
         }
 
         public override string AgeString() {
