@@ -279,6 +279,7 @@ namespace JoppesDjurfamilj {
                 }
             }
 
+            Console.Clear();
             pets[interactWithPet].Interact(balls[indexBall]);
         }
 
