@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JoppesDjurfamilj {
     class HouseCat : Cat {
@@ -13,7 +9,6 @@ namespace JoppesDjurfamilj {
             this.breed = _breed;
         }
 
-        // TODO: more creative prints.
         public override void Interact(Ball ball) {
             if(Hungry) {
                 Console.WriteLine("{0} ignores the ball", Name);

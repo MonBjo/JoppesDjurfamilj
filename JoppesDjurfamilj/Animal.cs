@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JoppesDjurfamilj {
     abstract class Animal {
@@ -57,7 +53,7 @@ namespace JoppesDjurfamilj {
             else {
 
                 if(food == FavFood) {
-                    Console.WriteLine("Accepts food"); //TODO: Write something better
+                    Console.WriteLine(Name + " eats hungrily"); 
                     Hungry = false;
                 }
                 else {

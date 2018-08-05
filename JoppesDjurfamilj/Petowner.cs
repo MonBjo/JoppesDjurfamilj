@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConsoleTables;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace JoppesDjurfamilj {
     class Petowner {
@@ -29,9 +27,6 @@ namespace JoppesDjurfamilj {
             new Ball("Green", "Hard", 5, 29),
             new Ball("Blue", "Smooth", 3, 30)
         };
-        
-
-        //TODO: CHECK ALL PRINTS: GRAMMAR, THIRD PERSON ETC, CONCISTENCY
 
         public void Menu() {
             while(true) {
@@ -143,18 +138,12 @@ namespace JoppesDjurfamilj {
                     //  About this program
                     case ConsoleKey.A: {
                         Console.WriteLine("====================================\n" +
-                                          "This is about Joppe and his family of pets\n" +
-                                          "You can play with them, feed them.. \n" +
-                                          "blablabla\n" +
-                                          "*something about how to play*");
-                        /* TODO: About this program and how to use it.
-                          Detta program går ut på att man styr Joppe när 
-                          han ineragerar med sina husdjur. Sin djurfamilj.
-                          Att interagera med djuren kan man göra genom att 
-                          leka med dom eller mata dom. Det finns flera 
-                          maträtter att välja på och även flera olika 
-                          sorters bollar. Djuren kommer givetvis reagera 
-                          olika beroende på vad som erbjuds.              */
+                                          "This is about Joppe and his family of pets.\n" +
+                                          " To interact with the pets Joppe can" +
+                                          " play with them or feed them.There are several" +
+                                          " dishes to choose from and also several different" +
+                                          " kinds of balls. \n Of course, the animals will react" +
+                                          " different depending on what is offered. ");
                         Console.WriteLine("============================\n" +
                                           "Press any key to continue...");
                         Console.ReadKey();
