@@ -13,11 +13,14 @@ namespace JoppesDjurfamilj {
             this.breed = _breed;
         }
 
+        // TODO: more creative prints.
         public override void Interact(Ball ball) {
-            throw new NotImplementedException();
-            //TODO: if hungry -> doesn't want to play
-            //TODO: if not hungry -> Want to play -> good ball -> plays -> becomes hungry
-            //TODO: if not hungry -> Want to play -> bad ball -> doesn't play
+            if(Hungry) {
+                Console.WriteLine("{0} hisses slightly.", Name);
+            }
+            else {
+                Console.WriteLine("{0} ignores the ball and climbes the cat-tree instead.", Name);
+            }
         }
 
         public override string ToString() {

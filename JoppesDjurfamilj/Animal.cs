@@ -66,7 +66,7 @@ namespace JoppesDjurfamilj {
 
             }
         }
-
+        
         public virtual string AgeString() {
             return $"{Age} years";
         }

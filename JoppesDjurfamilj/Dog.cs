@@ -13,11 +13,21 @@ namespace JoppesDjurfamilj {
             this.breed = _breed; 
         }
 
+        // TODO: more creative prints.
         public override void Interact(Ball ball) {
-            throw new NotImplementedException();
-            //TODO: if hungry -> doesn't want to play
-            //TODO: if not hungry -> Want to play -> good ball -> plays -> becomes hungry
-            //TODO: if not hungry -> Want to play -> bad ball -> doesn't play
+            if(Hungry) {
+                Console.WriteLine("{0} nudges the ball and sits down", Name);
+            }
+            else {
+                Console.WriteLine("{0} runs after it furiosly and quickly runs back, all while barking", Name);
+
+                int lowerQuality = random.Next(7);
+                ball.Quality -= lowerQuality;
+                if(ball.Quality < 0) {
+                    ball.Quality = 0;
+                    Console.WriteLine(ball + " is now broken");
+                }
+            }
         }
 
         public override void HungryAnimal() {

@@ -8,8 +8,9 @@ namespace JoppesDjurfamilj {
     class Ball {
         private string color = "";
         private string texture = "";
-        private int size = 6; // Max size in cm
-        private int quality = 30; // Max quality
+        private int size = 6;
+        private int quality = 0;
+        public static int maxQuality = 30;
 
         public string Color {
             get { return color; }
@@ -37,6 +38,10 @@ namespace JoppesDjurfamilj {
             size = _size;
             quality = _quality;
 
+        }
+
+        public string QualityString() {
+            return $"{Quality}/{maxQuality}";
         }
 
         public override string ToString() {

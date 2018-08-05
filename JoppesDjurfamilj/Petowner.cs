@@ -9,7 +9,7 @@ namespace JoppesDjurfamilj {
     class Petowner {
         // Defining data
         private int age = 0;
-        private string name = "Joppe";
+        private string namePetowner = "Joppe";
         private List<string> foods = new List<string>();
         private List<Animal> pets = new List<Animal> {
             new Dog(5, "Alfons", "Pork", "Andalusier"),
@@ -21,21 +21,22 @@ namespace JoppesDjurfamilj {
             new Puppy(1, "George", "Pork", "Poodle")
         };
         private List<Ball> balls = new List<Ball>(){
-            new Ball("Red", "Smooth", 4, 30),
-            new Ball("Blue", "Wavey", 6, 30),
-            new Ball("Pink", "Super soft", 6, 30),
-            new Ball("Green", "Grass like", 2, 30),
-            new Ball("Yellow", "Knobby", 3, 30),
-            new Ball("Green", "Hard", 5, 30)
+            new Ball("Red", "Smooth", 4, 0),
+            new Ball("Blue", "Wavey", 6, 10),
+            new Ball("Pink", "Super soft", 6, 16),
+            new Ball("Green", "Grass like", 2, 22),
+            new Ball("Yellow", "Knobby", 3, 27),
+            new Ball("Green", "Hard", 5, 29),
+            new Ball("Blue", "Smooth", 3, 30)
         };
         
 
-
+        //TODO: CHECK ALL PRINTS: GRAMMAR, THIRD PERSON ETC, CONCISTENCY
 
         public void Menu() {
             while(true) {
                 Console.Clear();
-                Console.WriteLine("=== Welcome to {0}'s Family of Pets ===", name);
+                Console.WriteLine("=== Welcome to {0}'s Family of Pets ===", namePetowner);
                 Console.WriteLine("[L] List pets\n" +
                                   "[P] Play fetch\n" +
                                   "[F] Feed a pet\n" +
@@ -74,7 +75,7 @@ namespace JoppesDjurfamilj {
                     case ConsoleKey.S: {
                         while(true) {
                             Console.WriteLine("=== The Storage ===\n" +
-                                             $"In {name}'s stoage you can find\n" +
+                                             $"In {namePetowner}'s stoage you can find\n" +
                                               "anything the pets could ever need.\n" +
                                               "  [F] Foods\n" +
                                               "  [B] Balls\n" +
@@ -93,8 +94,32 @@ namespace JoppesDjurfamilj {
                                 // Show balls
                                 case ConsoleKey.B: {
                                     Console.Clear();
-                                    ListBalls();
-                                    // TODO: Check ball
+                                    int indexBall = 4;
+
+                                    ListBalls(true);
+                                    while(true) {
+                                        try {
+                                            Console.WriteLine($"If you want {namePetowner} to check on a ball, write its index.\n" +
+                                                               "If not, leave it blank and press enter.");
+                                            //int userInputSubMenuBall = Convert.ToInt32(Console.ReadLine());
+                                            string userInputSubMenuBall = Console.ReadLine();
+                                            if(userInputSubMenuBall == "") {
+                                                break;
+                                            }
+                                            else {
+                                                indexBall = Convert.ToInt32(userInputSubMenuBall);
+                                                indexBall--; // The list of balls begins at 0, not 1
+                                                CheckBall(indexBall);
+                                                break;
+                                            }
+                                        }
+                                        catch(FormatException) {
+                                            Console.WriteLine("Please write an integer between 1 and {0} or leave it blank, then press enter.", balls.Count);
+                                        }
+                                        catch(Exception e) {
+                                            Console.WriteLine(e.Message);
+                                        }
+                                    }
                                     Console.WriteLine("============================\n" +
                                                       "Press any key to continue...");
                                     Console.ReadKey();
@@ -117,12 +142,19 @@ namespace JoppesDjurfamilj {
                     }
                     //  About this program
                     case ConsoleKey.A: {
-                        // TODO: About this program and how to use it.
                         Console.WriteLine("====================================\n" +
                                           "This is about Joppe and his family of pets\n" +
                                           "You can play with them, feed them.. \n" +
                                           "blablabla\n" +
                                           "*something about how to play*");
+                        /* TODO: About this program and how to use it.
+                          Detta program går ut på att man styr Joppe när 
+                          han ineragerar med sina husdjur. Sin djurfamilj.
+                          Att interagera med djuren kan man göra genom att 
+                          leka med dom eller mata dom. Det finns flera 
+                          maträtter att välja på och även flera olika 
+                          sorters bollar. Djuren kommer givetvis reagera 
+                          olika beroende på vad som erbjuds.              */
                         Console.WriteLine("============================\n" +
                                           "Press any key to continue...");
                         Console.ReadKey();
@@ -185,21 +217,31 @@ namespace JoppesDjurfamilj {
             }
             table.Write(Format.Alternative);
         }
-
-        public void ListBalls() {
+        
+        public void ListBalls(bool showBroken) {
             int index = 0;
             ConsoleTable table = new ConsoleTable("Index", "Color", "Size", "Texture", "Quality");
             foreach(Ball ball in balls) {
                 index++;
-                table.AddRow(index, ball.Color, ball.Size, ball.Texture, ball.Quality);
+                if(showBroken) {
+                    table.AddRow(index, ball.Color, ball.Size, ball.Texture, ball.QualityString());
+                }
+                else{
+                    if(ball.Quality == 0) {
+                        continue;
+                    }
+                    else {
+                        table.AddRow(index, ball.Color, ball.Size, ball.Texture, ball.QualityString());
+                    }
+                }
             }
             table.Write(Format.Alternative);
         }
 
         public void Fetch() {
             Console.Clear();
-            int interactWithPet;
             ListAnimals();
+            int interactWithPet;
             // Choose pet to interact with
             while(true) {
                 Console.Write("Please choose a pet by writing its index: ");
@@ -224,8 +266,9 @@ namespace JoppesDjurfamilj {
             }
 
             Console.Clear();
-            ListBalls();
+            ListBalls(false); // Do not show broken balls
             int indexBall;
+            // Choose ball to use
             while(true) {
                 Console.Write("Please choose a ball by writing its index: ");
                 try {
@@ -247,13 +290,104 @@ namespace JoppesDjurfamilj {
                 }
             }
 
-            Console.WriteLine($"Do you want {name} to check on the ball first? (Y/N) ");
-
-            
-            //TODO: Check ball first?
+            pets[interactWithPet].Interact(balls[indexBall]);
         }
 
-        public void CheckBall() {
+        public void CheckBall(int indexBall) {
+            Random random = new Random();
+            switch(balls[indexBall].Quality) {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    Console.Write("\"Half of the ball is missing. Should I buy a new one?\" (Y/N) ");
+                    FixBall();
+                    break;
+
+                case 5:
+                case 6:
+                case 8:
+                case 9:
+                case 10:
+                    Console.Write("\"The ball fell into pieces in my hand.. I could try and tape it together again.\" (Y/N) ");
+                    FixBall();
+                    break;
+
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                    Console.Write("\"Oh my, it has lost a big chunk, some glue might do. \" (Y/N) ");
+                    FixBall();
+                    break;
+
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                case 21:
+                case 22:
+                    Console.Write("\"It has this big hole, I could sew it.\" (Y/N) ");
+                    FixBall();
+                    break;
+
+                case 23:
+                case 24:
+                case 25:
+                case 26:
+                case 27:
+                    Console.Write("\"It has some scratches and a few holes. Should I fill them with something?\" (Y/N) ");
+                    FixBall();
+                    break;
+
+                case 28:
+                case 29:
+                    Console.Write("\"It's like new, only a few scratches. I could polish it maybe?\" (Y/N) ");
+                    FixBall();
+                    break;
+
+                case 30:
+                    Console.WriteLine("\"This is brand new!\"");
+                    break;
+            }
+
+            void FixBall() {
+                bool continueLoop = true;
+                while(continueLoop) {
+                    ConsoleKeyInfo userInput = Console.ReadKey(true);
+                    switch(userInput.Key) {
+                        // Yes, fix the ball
+                        case ConsoleKey.Y: {
+                            if(balls[indexBall].Quality < 4) {
+                                balls[indexBall].Quality = Ball.maxQuality;
+                            }
+                            else {
+                                int qualityUp = random.Next(5);
+                                balls[indexBall].Quality += qualityUp;
+
+                                if(balls[indexBall].Quality > Ball.maxQuality) {
+                                    balls[indexBall].Quality = Ball.maxQuality;
+                                }
+                            }
+
+                            continueLoop = false;
+                            break;
+                        }
+                        // No, don't fix the ball
+                        case ConsoleKey.N: {
+                            continueLoop = false;
+                            break;
+                        }
+                        default: {
+                            Console.Write("\nPlease write [Y] yes or [N] no: ");
+                            break;
+                        }
+                    }
+
+                }
+            }
 
         }
 
@@ -297,7 +431,7 @@ namespace JoppesDjurfamilj {
                     }
                     else {
                         foodIndex = userInputChooseFood - 1;
-                        Console.WriteLine("{0} tries to feed {1} with {2}", name, pets[petIndex].Name, foods[foodIndex]);
+                        Console.WriteLine("{0} tries to feed {1} with {2}", namePetowner, pets[petIndex].Name, foods[foodIndex]);
                         pets[petIndex].Eat(foods[foodIndex]);
                         break; //Sucessful input
                     }
