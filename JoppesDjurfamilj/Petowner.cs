@@ -408,6 +408,7 @@ namespace JoppesDjurfamilj {
                 }
             }
 
+            Console.Clear();
             ListFoods();
             int foodIndex;
             while(true) {
