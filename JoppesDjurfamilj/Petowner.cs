@@ -31,13 +31,13 @@ namespace JoppesDjurfamilj {
         public Petowner() {
             int index = 0;
              foreach(Animal pet in pets) {
-                Program.WriteToFile("status.txt", $"[Pet][{index}] {pet.Name}, {pet.Age}, {pet.Breed}, {pet.Hungry}, {pet.favFood}");
+                Stream.WriteToFile("status.txt", $"[Pet][{index}] {pet.Name}, {pet.Age}, {pet.Breed}, {pet.Hungry}, {pet.favFood}");
                 index++;
             }
 
             index = 0;
             foreach(Ball ball in balls) {
-                Program.WriteToFile("status.txt", $"[Ball][{index}] {ball.Color}, {ball.Size}, {ball.Texture}, {ball.Quality}");
+                Stream.WriteToFile("status.txt", $"[Ball][{index}] {ball.Color}, {ball.Size}, {ball.Texture}, {ball.Quality}");
                 index++;
             }
         }
