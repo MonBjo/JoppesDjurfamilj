@@ -28,6 +28,20 @@ namespace JoppesDjurfamilj {
             new Ball("Blue", "Smooth", 3, 30)
         };
 
+        public Petowner() {
+            int index = 0;
+             foreach(Animal pet in pets) {
+                Program.WriteToFile("status.txt", $"[Pet][{index}] {pet.Name}, {pet.Age}, {pet.Breed}, {pet.Hungry}, {pet.favFood}");
+                index++;
+            }
+
+            index = 0;
+            foreach(Ball ball in balls) {
+                Program.WriteToFile("status.txt", $"[Ball][{index}] {ball.Color}, {ball.Size}, {ball.Texture}, {ball.Quality}");
+                index++;
+            }
+        }
+
         public void Menu() {
             while(true) {
                 Console.Clear();
@@ -152,6 +166,7 @@ namespace JoppesDjurfamilj {
                     }
                     // Quit
                     case ConsoleKey.Q: {
+                        
                         Environment.Exit(0);
                         break;
                     }

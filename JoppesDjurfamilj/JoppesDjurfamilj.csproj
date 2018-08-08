@@ -62,6 +62,7 @@
     <Compile Include="Cat.cs" />
     <Compile Include="ConsoleTable.cs" />
     <Compile Include="Dog.cs" />
+    <Compile Include="Files.cs" />
     <Compile Include="HouseCat.cs" />
     <Compile Include="Leopardus.cs" />
     <Compile Include="Petowner.cs" />
