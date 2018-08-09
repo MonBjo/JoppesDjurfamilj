@@ -4,7 +4,7 @@ using ConsoleTables;
 using System.Text;
 
 namespace JoppesDjurfamilj {
-    class Petowner {
+    internal class Petowner {
         // Defining data
         private int age = 0;
         private string namePetowner = "Joppe";
@@ -28,16 +28,18 @@ namespace JoppesDjurfamilj {
             new Ball("Blue", "Smooth", 3, 30)
         };
 
+        //TODO: getset for pets and balls for the UptadeStatusFile()method. 
+
         public Petowner() {
             int index = 0;
              foreach(Animal pet in pets) {
-                Stream.WriteToFile("status.txt", $"[Pet][{index}] {pet.Name}, {pet.Age}, {pet.Breed}, {pet.Hungry}, {pet.favFood}");
+                Stream.WriteToFile(Stream.statusFile, $"[Pet][{index}] {pet.Name}, {pet.Age}, {pet.Breed}, {pet.Hungry}, {pet.favFood}");
                 index++;
             }
 
             index = 0;
             foreach(Ball ball in balls) {
-                Stream.WriteToFile("status.txt", $"[Ball][{index}] {ball.Color}, {ball.Size}, {ball.Texture}, {ball.Quality}");
+                Stream.WriteToFile(Stream.statusFile, $"[Ball][{index}] {ball.Color}, {ball.Size}, {ball.Texture}, {ball.Quality}");
                 index++;
             }
         }
