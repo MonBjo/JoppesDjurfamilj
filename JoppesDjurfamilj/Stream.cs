@@ -50,11 +50,10 @@ namespace JoppesDjurfamilj {
         }
 
         private static void UpdateStatusFile(string line) {
-            //Debug.Assert(line.Contains("Pet") == false, "the line does contain pet");
-            if(line.Contains("Pet")) { // Something is wrong here
+            if(line.Contains("[Pet]")) {
                 int index = 0;
-                for(int i = 6; i < 9; i++) { // Can find up to 3 digit integers
-                    if(char.IsDigit(line[i])) {
+                for(int i = 5; i < 9; i++) { // Can find up to 3 digit integers
+                    if(char.IsDigit(line[i])) { // Finds the index of a pet.
                         index += i;
                     }
                 }
