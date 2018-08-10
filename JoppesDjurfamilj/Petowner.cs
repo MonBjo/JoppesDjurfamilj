@@ -9,7 +9,7 @@ namespace JoppesDjurfamilj {
         private int age = 0;
         private string namePetowner = "Joppe";
         private List<string> foods = new List<string>();
-        private List<Animal> pets = new List<Animal> {
+        internal List<Animal> pets = new List<Animal> {
             new Dog(5, "Alfons", "Pork", "Andalusier"),
             new Puppy(8, "Bea", "Minced meat", "Terrier"),
             new HouseCat(7, "Charles", "Mice", "Norwegan Forestcat"),
@@ -18,7 +18,7 @@ namespace JoppesDjurfamilj {
             new Leopardus(9, "Frank", "Pork", "Kodkod"),
             new Puppy(1, "George", "Pork", "Poodle")
         };
-        private List<Ball> balls = new List<Ball>(){
+        internal List<Ball> balls = new List<Ball>(){
             new Ball("Red", "Smooth", 4, 0),
             new Ball("Blue", "Wavey", 6, 10),
             new Ball("Pink", "Super soft", 6, 16),
@@ -28,18 +28,21 @@ namespace JoppesDjurfamilj {
             new Ball("Blue", "Smooth", 3, 30)
         };
 
-        //TODO: getset for pets and balls for the UptadeStatusFile()method. 
+        internal List<Animal> GetPets {
+            get { return pets; }
+            set { pets = value; }
+        }
 
         public Petowner() {
             int index = 0;
              foreach(Animal pet in pets) {
-                Stream.WriteToFile(Stream.statusFile, $"[Pet][{index}] {pet.Name}, {pet.Age}, {pet.Breed}, {pet.Hungry}, {pet.favFood}");
+                Stream.WriteToFile(Stream.statusFile, $"[Pet][{index}] {pet.Name},{pet.Age},{pet.Breed},{pet.Hungry},{pet.favFood}");
                 index++;
             }
 
             index = 0;
             foreach(Ball ball in balls) {
-                Stream.WriteToFile(Stream.statusFile, $"[Ball][{index}] {ball.Color}, {ball.Size}, {ball.Texture}, {ball.Quality}");
+                Stream.WriteToFile(Stream.statusFile, $"[Ball][{index}] {ball.Color},{ball.Size},{ball.Texture},{ball.Quality}");
                 index++;
             }
         }

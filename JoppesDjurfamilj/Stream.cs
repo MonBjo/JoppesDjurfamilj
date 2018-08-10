@@ -10,6 +10,8 @@ namespace JoppesDjurfamilj {
         // Filenames
         internal static string statusFile = "status.txt"; // to remember status of pets and balls
         internal static string logFile = "log.txt"; // a log of what happens in the program
+        // References
+        Petowner petowner = new Petowner();
 
         internal static void WriteToFile(string fileName, string text) {
             try {
@@ -23,16 +25,16 @@ namespace JoppesDjurfamilj {
             }
         }
 
-        internal static List<string> ReadFromFile(string fileName) {
+        internal static List<string> ReadFromFile(string _fileName) {
             List<string> lines = new List<string>();
             try {
-                using(StreamReader streamReader = new StreamReader(fileName)) {
+                using(StreamReader streamReader = new StreamReader(_fileName)) {
                     string line = streamReader.ReadLine();
                     while(line != null) {
                         lines.Add(line);
                         line = streamReader.ReadLine();
                     }
-                    if(fileName == statusFile) {
+                    if(_fileName == statusFile) {
                         UpdateStatusFile(line);
                     }
                     streamReader.Close();
@@ -52,11 +54,21 @@ namespace JoppesDjurfamilj {
                         index += i;
                     }
                 }
-                // TODO: update pet based on it's index.
-                
+                List<string> petData = line.Split(',').ToList();
+                foreach(string foo in petData) {
+                    WriteToFile("newFile.txt", foo);
+                }
             }
         }
 
+        internal void GetPet(int index, List<string> petData) {
+            List<Animal> pets = petowner.GetPets;
+            pets[index].Name = petData[0];
+            pets[index].Age = Convert.ToInt32(petData[1]);
+            pets[index].Breed = petData[2];
+            pets[index].Hungry = Convert.ToBoolean(petData[3]);
+            pets[index].FavFood = petData[4];
+        }
 
     }
 }
