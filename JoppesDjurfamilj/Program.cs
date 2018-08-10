@@ -6,7 +6,7 @@ using System.IO;
 namespace JoppesDjurfamilj {
     class Program {
         static void Main(string[] args) {
-            List<string> lines = Stream.ReadFromFile(Stream.logFile);
+            List<string> lines = Stream.ReadFromFile(Stream.statusFile);
             Stream.WriteToFile("log.txt", "Program started successfully");
 
             Petowner petowner = new Petowner();

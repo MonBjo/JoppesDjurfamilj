@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace JoppesDjurfamilj {
     internal class Stream {
         // Filenames
-        internal static string statusFile = "status.txt"; // to remember status of pets and balls
-        internal static string logFile = "log.txt"; // a log of what happens in the program
+        internal static readonly string statusFile = "status.txt"; // to remember status of pets and balls
+        internal static readonly string logFile = "log.txt"; // a log of what happens in the program
         // References
         Petowner petowner = new Petowner();
 
@@ -26,16 +27,18 @@ namespace JoppesDjurfamilj {
         }
 
         internal static List<string> ReadFromFile(string _fileName) {
-            List<string> lines = new List<string>();
+            List<string> linesFromFile = new List<string>();
             try {
                 using(StreamReader streamReader = new StreamReader(_fileName)) {
-                    string line = streamReader.ReadLine();
-                    while(line != null) {
-                        lines.Add(line);
-                        line = streamReader.ReadLine();
-                    }
-                    if(_fileName == statusFile) {
-                        UpdateStatusFile(line);
+                    string singleLine = streamReader.ReadLine();
+                    while(singleLine != null) {
+                        if(_fileName == statusFile) {
+                            UpdateStatusFile(singleLine);
+                        }
+                        else {
+                            linesFromFile.Add(singleLine);
+                            singleLine = streamReader.ReadLine(); 
+                        }
                     }
                     streamReader.Close();
                 }
@@ -43,11 +46,12 @@ namespace JoppesDjurfamilj {
             catch(Exception e) {
                 Console.WriteLine(e.Message);
             }
-            return lines;
+            return linesFromFile;
         }
 
         private static void UpdateStatusFile(string line) {
-            if(line.Contains("[Pet]")) {
+            //Debug.Assert(line.Contains("Pet") == false, "the line does contain pet");
+            if(line.Contains("Pet")) { // Something is wrong here
                 int index = 0;
                 for(int i = 6; i < 9; i++) { // Can find up to 3 digit integers
                     if(char.IsDigit(line[i])) {
