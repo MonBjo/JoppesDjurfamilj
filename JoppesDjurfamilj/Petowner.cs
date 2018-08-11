@@ -36,13 +36,13 @@ namespace JoppesDjurfamilj {
         public Petowner() {
             int index = 0;
              foreach(Animal pet in pets) {
-                Stream.WriteToFile(Stream.statusFile, $"[Pet][{index}] {pet.Name},{pet.Age},{pet.Breed},{pet.Hungry},{pet.favFood}");
+                Stream.WriteToFile(Stream.statusFile, $"[Pet][{index}],{pet.Name},{pet.Age},{pet.Breed},{pet.Hungry},{pet.favFood}");
                 index++;
             }
 
             index = 0;
             foreach(Ball ball in balls) {
-                Stream.WriteToFile(Stream.statusFile, $"[Ball][{index}] {ball.Color},{ball.Size},{ball.Texture},{ball.Quality}");
+                Stream.WriteToFile(Stream.statusFile, $"[Ball][{index}],{ball.Color},{ball.Size},{ball.Texture},{ball.Quality}");
                 index++;
             }
         }
@@ -57,6 +57,7 @@ namespace JoppesDjurfamilj {
                                   "[S] Storage\n" +
                                   "[A] About this program\n" +
                                   "[Q] Quit\n");
+                Stream.WriteToFile(Stream.logFile, "Main menu loaded successfully");
                 ConsoleKeyInfo userInputMainMenu = Console.ReadKey(true);
                 switch(userInputMainMenu.Key) {
                     //  List animals

@@ -30,14 +30,20 @@ namespace JoppesDjurfamilj {
             List<string> linesFromFile = new List<string>();
             try {
                 using(StreamReader streamReader = new StreamReader(_fileName)) {
-                    string singleLine = streamReader.ReadLine();
-                    while(singleLine != null) {
-                        if(_fileName == statusFile) {
-                            UpdateStatusFile(singleLine);
+                    while(true) {
+                        string singleLine = streamReader.ReadLine();
+                        if(singleLine != null) {
+                            WriteToFile("newFile.txt", "is this a part of tha loop");
+                            if(_fileName == statusFile) {
+                                UpdateStatus(singleLine);
+                            }
+                            else {
+                                linesFromFile.Add(singleLine);
+                                singleLine = streamReader.ReadLine();
+                            }
                         }
                         else {
-                            linesFromFile.Add(singleLine);
-                            singleLine = streamReader.ReadLine(); 
+                            break;
                         }
                     }
                     streamReader.Close();
@@ -49,7 +55,7 @@ namespace JoppesDjurfamilj {
             return linesFromFile;
         }
 
-        private static void UpdateStatusFile(string line) {
+        private static void UpdateStatus(string line) {
             if(line.Contains("[Pet]")) {
                 int index = 0;
                 for(int i = 5; i < 9; i++) { // Can find up to 3 digit integers
@@ -58,6 +64,7 @@ namespace JoppesDjurfamilj {
                     }
                 }
                 List<string> petData = line.Split(',').ToList();
+                petData.RemoveAt(0);
                 foreach(string foo in petData) {
                     WriteToFile("newFile.txt", foo);
                 }
