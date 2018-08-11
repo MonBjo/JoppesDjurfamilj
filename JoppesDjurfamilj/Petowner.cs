@@ -4,7 +4,7 @@ using ConsoleTables;
 using System.Text;
 
 namespace JoppesDjurfamilj {
-    internal class Petowner {
+    public class Petowner {
         // Defining data
         private int age = 0;
         private string namePetowner = "Joppe";
@@ -34,8 +34,12 @@ namespace JoppesDjurfamilj {
         }
 
         public Petowner() {
+            updateStatusFile();
+        }
+
+        internal void updateStatusFile() {
             int index = 0;
-             foreach(Animal pet in pets) {
+            foreach(Animal pet in pets) {
                 Stream.WriteToFile(Stream.statusFile, $"[Pet][{index}],{pet.Name},{pet.Age},{pet.Breed},{pet.Hungry},{pet.favFood}");
                 index++;
             }
@@ -45,6 +49,7 @@ namespace JoppesDjurfamilj {
                 Stream.WriteToFile(Stream.statusFile, $"[Ball][{index}],{ball.Color},{ball.Size},{ball.Texture},{ball.Quality}");
                 index++;
             }
+            Stream.WriteToFile(Stream.logFile, $"Updated {Stream.logFile} successfully");
         }
 
         public void Menu() {
@@ -302,6 +307,7 @@ namespace JoppesDjurfamilj {
 
             Console.Clear();
             pets[interactWithPet].Interact(balls[indexBall]);
+            updateStatusFile();
         }
 
         public void CheckBall(int indexBall) {
@@ -384,6 +390,7 @@ namespace JoppesDjurfamilj {
                             }
 
                             continueLoop = false;
+                            updateStatusFile();
                             break;
                         }
                         // No, don't fix the ball
@@ -445,6 +452,7 @@ namespace JoppesDjurfamilj {
                         foodIndex = userInputChooseFood - 1;
                         Console.WriteLine("{0} tries to feed {1} with {2}", namePetowner, pets[petIndex].Name, foods[foodIndex]);
                         pets[petIndex].Eat(foods[foodIndex]);
+                        updateStatusFile();
                         break; //Sucessful input
                     }
                 }

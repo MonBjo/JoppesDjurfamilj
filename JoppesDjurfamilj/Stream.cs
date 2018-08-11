@@ -12,7 +12,7 @@ namespace JoppesDjurfamilj {
         internal static readonly string statusFile = "status.txt"; // to remember status of pets and balls
         internal static readonly string logFile = "log.txt"; // a log of what happens in the program
         // References
-        Petowner petowner = new Petowner();
+        internal Petowner petowner = new Petowner();
 
         internal static void WriteToFile(string fileName, string text) {
             try {
@@ -33,13 +33,17 @@ namespace JoppesDjurfamilj {
                     while(true) {
                         string singleLine = streamReader.ReadLine();
                         if(singleLine != null) {
-                            WriteToFile("newFile.txt", "is this a part of tha loop");
                             if(_fileName == statusFile) {
                                 UpdateStatus(singleLine);
                             }
                             else {
                                 linesFromFile.Add(singleLine);
                                 singleLine = streamReader.ReadLine();
+                                /* * * * * * * * * * * * * * * * * * * * *\
+                                 *  only reads in the file in case it's  *
+                                 *  going to be used for something else  *
+                                 *  the lines are saved in linesFromFile *
+                                \* * * * * * * * * * * * * * * * * * * * */
                             }
                         }
                         else {
@@ -56,6 +60,7 @@ namespace JoppesDjurfamilj {
         }
 
         private static void UpdateStatus(string line) {
+            Stream nonStatic = new Stream();
             if(line.Contains("[Pet]")) {
                 int index = 0;
                 for(int i = 5; i < 9; i++) { // Can find up to 3 digit integers
@@ -65,19 +70,20 @@ namespace JoppesDjurfamilj {
                 }
                 List<string> petData = line.Split(',').ToList();
                 petData.RemoveAt(0);
+                nonStatic.GetPet(index, petData);
                 foreach(string foo in petData) {
-                    WriteToFile("newFile.txt", foo);
                 }
             }
+
         }
 
-        internal void GetPet(int index, List<string> petData) {
+        private void GetPet(int index, List<string> petData) {
             List<Animal> pets = petowner.GetPets;
-            pets[index].Name = petData[0];
+            pets[index].Name = Convert.ToString(petData[0]);
             pets[index].Age = Convert.ToInt32(petData[1]);
-            pets[index].Breed = petData[2];
+            pets[index].Breed = Convert.ToString(petData[2]);
             pets[index].Hungry = Convert.ToBoolean(petData[3]);
-            pets[index].FavFood = petData[4];
+            pets[index].FavFood = Convert.ToString(petData[4]);
         }
 
     }
