@@ -24,18 +24,34 @@ namespace JoppesDjurfamilj {
         }
 
         internal void LoadStatus() {
-            List<string> currentStatus = ReadFromFile(statusFile);
-            //TODO: make it happen.
+            List<string> currentStatus = new List<string>();
+            currentStatus.AddRange(ReadFromFile(statusFile));
+            int outsetLength = 0;
+            int index = 0;
+            foreach(string line in currentStatus) {
+                if(line.Contains("[ball]")) {
+                    outsetLength = 6;
+                    for(int i = outsetLength; i < line.Length - 1; i++) {
+                        if(char.IsDigit(line[i])) {
+                            index += line[i];
+                        }
+                    }
+                }
+                else if(line.Contains("[pet]")) {
+                    outsetLength = 5;
+
+                }
+            }
+            // TODO: Finish this shit
         }
 
         private List<string> ReadFromFile(string fileName) {
             List<string> lines = new List<string>();
             try {
                 using(StreamReader streamReader = new StreamReader(fileName)) {
-                    string singleLine = streamReader.ReadLine();
-                    if(streamReader != null) { // TODO: Potential bug
-                        lines.Add(singleLine);
-                        singleLine = streamReader.ReadLine();
+                    string line;
+                    while((line = streamReader.ReadLine()) != null) {
+                        lines.Add(line);
                     }
                 }
             }

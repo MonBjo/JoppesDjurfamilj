@@ -32,30 +32,11 @@ namespace JoppesDjurfamilj {
         public Petowner() {
             stream.Log("Program started sucessfully");
             //TODO: Put logs where ever it's needed
-            //stream.LoadStatus();
+            stream.LoadStatus();
 	    }
-
-        private void UpdateStatus() {
-            int index = 0;
-            List<string> updateData = new List<string>();
-            foreach(Ball ball in balls) {
-                updateData.Add($"[ball][{index}] {ball.Color}, {ball.Texture}, {ball.Size}, {ball.Quality}");
-                index++;
-            }
-
-            index = 0;
-            foreach(Animal pet in pets) {
-                updateData.Add($"[pet][{index}] {pet.Name}, {pet.Age}, {pet.Breed}, {pet.Hungry}, {pet.FavFood}");
-                index++;
-            }
-
-                stream.SaveStatus(updateData);
-        }
 
         public void Menu() {
             while(true) {
-                UpdateStatus();
-                    
                 Console.Clear();
                 Console.WriteLine("=== Welcome to {0}'s Family of Pets ===", namePetowner);
                 Console.WriteLine("[L] List pets\n" +
@@ -178,6 +159,8 @@ namespace JoppesDjurfamilj {
                     }
                     // Quit
                     case ConsoleKey.Q: {
+                        UpdateStatus();
+                        stream.Log("Exiting program");
                         Environment.Exit(0);
                         break;
                     }
@@ -188,6 +171,23 @@ namespace JoppesDjurfamilj {
                     }
                 }
             }
+        }
+
+        private void UpdateStatus() {
+            int index = 0;
+            List<string> updateData = new List<string>();
+            foreach(Ball ball in balls) {
+                updateData.Add($"[ball][{index}] {ball.Color}, {ball.Texture}, {ball.Size}, {ball.Quality}");
+                index++;
+            }
+
+            index = 0;
+            foreach(Animal pet in pets) {
+                updateData.Add($"[pet][{index}] {pet.Name}, {pet.Age}, {pet.Breed}, {pet.Hungry}, {pet.FavFood}");
+                index++;
+            }
+
+            stream.SaveStatus(updateData);
         }
 
         public void ListAnimals() {
