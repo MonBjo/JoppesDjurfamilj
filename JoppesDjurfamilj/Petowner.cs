@@ -32,8 +32,32 @@ namespace JoppesDjurfamilj {
         public Petowner() {
             stream.Log("Program started sucessfully");
             //TODO: Put logs where ever it's needed
-            stream.LoadStatus();
-	    }
+            int petIndex = 0;
+            int ballIndex = 0;
+            List<string> loadingStatus = stream.LoadStatus();
+
+            foreach(string line in loadingStatus) {
+                if(line.Contains("[ball]")) {
+                    string[] loadingBall = line.Replace("[ball]", "").Split(',');
+
+                    balls[ballIndex].Color = loadingBall[0];
+                    balls[ballIndex].Texture = loadingBall[1];
+                    balls[ballIndex].Size = Convert.ToInt32(loadingBall[2]);
+                    balls[ballIndex].Quality = Convert.ToInt32(loadingBall[3]);
+                    ballIndex++;
+                }
+                else if(line.Contains("[pet]")) {
+                    string[] loadingPet = line.Replace("[pet]", "").Split(',');
+
+                    pets[petIndex].Name = loadingPet[0];
+                    pets[petIndex].Age = Convert.ToInt32(loadingPet[1]);
+                    pets[petIndex].Breed = loadingPet[2];
+                    pets[petIndex].Hungry = Convert.ToBoolean(loadingPet[3]);
+                    pets[petIndex].FavFood = loadingPet[4];
+                    petIndex++;
+                }
+            }
+        }
 
         public void Menu() {
             while(true) {
@@ -159,7 +183,7 @@ namespace JoppesDjurfamilj {
                     }
                     // Quit
                     case ConsoleKey.Q: {
-                        UpdateStatus();
+                        LogStatus();
                         stream.Log("Exiting program");
                         Environment.Exit(0);
                         break;
@@ -173,18 +197,15 @@ namespace JoppesDjurfamilj {
             }
         }
 
-        private void UpdateStatus() {
-            int index = 0;
+        private void LogStatus() {
             List<string> updateData = new List<string>();
-            foreach(Ball ball in balls) {
-                updateData.Add($"[ball][{index}] {ball.Color}, {ball.Texture}, {ball.Size}, {ball.Quality}");
-                index++;
-            }
 
-            index = 0;
+            foreach(Ball ball in balls) {
+                updateData.Add($"[ball]{ball.Color},{ball.Texture},{ball.Size},{ball.Quality}");
+            }
+            
             foreach(Animal pet in pets) {
-                updateData.Add($"[pet][{index}] {pet.Name}, {pet.Age}, {pet.Breed}, {pet.Hungry}, {pet.FavFood}");
-                index++;
+                updateData.Add($"[pet]{pet.Name},{pet.Age},{pet.Breed},{pet.Hungry},{pet.FavFood}");
             }
 
             stream.SaveStatus(updateData);
@@ -312,6 +333,10 @@ namespace JoppesDjurfamilj {
         public void CheckBall(int indexBall) {
             Random random = new Random();
             switch(balls[indexBall].Quality) {
+                case 0:
+                    Console.Write("\"Is this a ball?.. I should buy a new one\" (Y/N) ");
+                FixBall();
+                    break;
                 case 1:
                 case 2:
                 case 3:
@@ -387,14 +412,14 @@ namespace JoppesDjurfamilj {
                                     balls[indexBall].Quality = Ball.maxQuality;
                                 }
                             }
-
+                            Console.WriteLine("\nThis is much better\n");
                             continueLoop = false;
-                            UpdateStatus();
                             break;
                         }
                         // No, don't fix the ball
                         case ConsoleKey.N: {
                             continueLoop = false;
+                            Console.WriteLine();
                             break;
                         }
                         default: {

@@ -23,26 +23,10 @@ namespace JoppesDjurfamilj {
             }
         }
 
-        internal void LoadStatus() {
+        internal List<string> LoadStatus() {
             List<string> currentStatus = new List<string>();
             currentStatus.AddRange(ReadFromFile(statusFile));
-            int outsetLength = 0;
-            int index = 0;
-            foreach(string line in currentStatus) {
-                if(line.Contains("[ball]")) {
-                    outsetLength = 6;
-                    for(int i = outsetLength; i < line.Length - 1; i++) {
-                        if(char.IsDigit(line[i])) {
-                            index += line[i];
-                        }
-                    }
-                }
-                else if(line.Contains("[pet]")) {
-                    outsetLength = 5;
-
-                }
-            }
-            // TODO: Finish this shit
+            return currentStatus;
         }
 
         private List<string> ReadFromFile(string fileName) {
