@@ -27,33 +27,35 @@ namespace JoppesDjurfamilj {
             new Ball("Green", "Hard", 5, 29),
             new Ball("Blue", "Smooth", 3, 30)
         };
-
-        internal List<Animal> GetPets {
-            get { return pets; }
-            set { pets = value; }
-        }
+        Stream stream = new Stream();
 
         public Petowner() {
-            updateStatusFile();
-        }
+            stream.Log("Program started sucessfully");
+            //TODO: Put logs where ever it's needed
+            //stream.LoadStatus();
+	    }
 
-        internal void updateStatusFile() {
+        private void UpdateStatus() {
             int index = 0;
-            foreach(Animal pet in pets) {
-                Stream.WriteToFile(Stream.statusFile, $"[Pet][{index}],{pet.Name},{pet.Age},{pet.Breed},{pet.Hungry},{pet.favFood}");
+            List<string> updateData = new List<string>();
+            foreach(Ball ball in balls) {
+                updateData.Add($"[ball][{index}] {ball.Color}, {ball.Texture}, {ball.Size}, {ball.Quality}");
                 index++;
             }
 
             index = 0;
-            foreach(Ball ball in balls) {
-                Stream.WriteToFile(Stream.statusFile, $"[Ball][{index}],{ball.Color},{ball.Size},{ball.Texture},{ball.Quality}");
+            foreach(Animal pet in pets) {
+                updateData.Add($"[pet][{index}] {pet.Name}, {pet.Age}, {pet.Breed}, {pet.Hungry}, {pet.FavFood}");
                 index++;
             }
-            Stream.WriteToFile(Stream.logFile, $"Updated {Stream.logFile} successfully");
+
+                stream.SaveStatus(updateData);
         }
 
         public void Menu() {
             while(true) {
+                UpdateStatus();
+                    
                 Console.Clear();
                 Console.WriteLine("=== Welcome to {0}'s Family of Pets ===", namePetowner);
                 Console.WriteLine("[L] List pets\n" +
@@ -62,7 +64,6 @@ namespace JoppesDjurfamilj {
                                   "[S] Storage\n" +
                                   "[A] About this program\n" +
                                   "[Q] Quit\n");
-                Stream.WriteToFile(Stream.logFile, "Main menu loaded successfully");
                 ConsoleKeyInfo userInputMainMenu = Console.ReadKey(true);
                 switch(userInputMainMenu.Key) {
                     //  List animals
@@ -177,7 +178,6 @@ namespace JoppesDjurfamilj {
                     }
                     // Quit
                     case ConsoleKey.Q: {
-                        
                         Environment.Exit(0);
                         break;
                     }
@@ -307,7 +307,6 @@ namespace JoppesDjurfamilj {
 
             Console.Clear();
             pets[interactWithPet].Interact(balls[indexBall]);
-            updateStatusFile();
         }
 
         public void CheckBall(int indexBall) {
@@ -390,7 +389,7 @@ namespace JoppesDjurfamilj {
                             }
 
                             continueLoop = false;
-                            updateStatusFile();
+                            UpdateStatus();
                             break;
                         }
                         // No, don't fix the ball
@@ -452,7 +451,6 @@ namespace JoppesDjurfamilj {
                         foodIndex = userInputChooseFood - 1;
                         Console.WriteLine("{0} tries to feed {1} with {2}", namePetowner, pets[petIndex].Name, foods[foodIndex]);
                         pets[petIndex].Eat(foods[foodIndex]);
-                        updateStatusFile();
                         break; //Sucessful input
                     }
                 }

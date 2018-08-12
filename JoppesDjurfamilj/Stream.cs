@@ -9,82 +9,53 @@ using System.Threading.Tasks;
 namespace JoppesDjurfamilj {
     internal class Stream {
         // Filenames
-        internal static readonly string statusFile = "status.txt"; // to remember status of pets and balls
-        internal static readonly string logFile = "log.txt"; // a log of what happens in the program
-        // References
-        internal Petowner petowner = new Petowner();
+        private string logFile = "log.txt"; // a log of what happens in the program
+        private string statusFile = "status.txt"; // to remember status of pets and balls
 
-        internal static void WriteToFile(string fileName, string text) {
+        internal void Log(string stringToLog) {
+            WriteToFile(logFile, $"[{DateTime.Now}] {stringToLog}");
+        }
+        
+        internal void SaveStatus(List<string> newData) {
+            File.Create(statusFile).Close(); // Clear file before updating data.
+            foreach(string line in newData) {
+                WriteToFile(statusFile, line);
+            }
+        }
+
+        internal void LoadStatus() {
+            List<string> currentStatus = ReadFromFile(statusFile);
+            //TODO: make it happen.
+        }
+
+        private List<string> ReadFromFile(string fileName) {
+            List<string> lines = new List<string>();
             try {
-                using(var streamWriter = new StreamWriter(fileName, true)) {
-                    streamWriter.WriteLine($"[{DateTime.Now}]: {text}");
-                    streamWriter.Close();
+                using(StreamReader streamReader = new StreamReader(fileName)) {
+                    string singleLine = streamReader.ReadLine();
+                    if(streamReader != null) { // TODO: Potential bug
+                        lines.Add(singleLine);
+                        singleLine = streamReader.ReadLine();
+                    }
                 }
             }
             catch(Exception e) {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("The file could not be read: \n" + e.Message);
+                Console.ReadKey(true);
             }
+            return lines;
         }
 
-        internal static List<string> ReadFromFile(string _fileName) {
-            List<string> linesFromFile = new List<string>();
+        private void WriteToFile(string fileName, string line) {
             try {
-                using(StreamReader streamReader = new StreamReader(_fileName)) {
-                    while(true) {
-                        string singleLine = streamReader.ReadLine();
-                        if(singleLine != null) {
-                            if(_fileName == statusFile) {
-                                UpdateStatus(singleLine);
-                            }
-                            else {
-                                linesFromFile.Add(singleLine);
-                                singleLine = streamReader.ReadLine();
-                                /* * * * * * * * * * * * * * * * * * * * *\
-                                 *  only reads in the file in case it's  *
-                                 *  going to be used for something else  *
-                                 *  the lines are saved in linesFromFile *
-                                \* * * * * * * * * * * * * * * * * * * * */
-                            }
-                        }
-                        else {
-                            break;
-                        }
-                    }
-                    streamReader.Close();
+                using(StreamWriter streamWriter = new StreamWriter(fileName, true)) {
+                    streamWriter.WriteLine(line);
                 }
             }
             catch(Exception e) {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Unable to write to file: \n" + e.Message);
+                Console.ReadKey(true);
             }
-            return linesFromFile;
         }
-
-        private static void UpdateStatus(string line) {
-            Stream nonStatic = new Stream();
-            if(line.Contains("[Pet]")) {
-                int index = 0;
-                for(int i = 5; i < 9; i++) { // Can find up to 3 digit integers
-                    if(char.IsDigit(line[i])) { // Finds the index of a pet.
-                        index += i;
-                    }
-                }
-                List<string> petData = line.Split(',').ToList();
-                petData.RemoveAt(0);
-                nonStatic.GetPet(index, petData);
-                foreach(string foo in petData) {
-                }
-            }
-
-        }
-
-        private void GetPet(int index, List<string> petData) {
-            List<Animal> pets = petowner.GetPets;
-            pets[index].Name = Convert.ToString(petData[0]);
-            pets[index].Age = Convert.ToInt32(petData[1]);
-            pets[index].Breed = Convert.ToString(petData[2]);
-            pets[index].Hungry = Convert.ToBoolean(petData[3]);
-            pets[index].FavFood = Convert.ToString(petData[4]);
-        }
-
     }
 }
