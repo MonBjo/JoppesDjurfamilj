@@ -12,6 +12,7 @@ namespace JoppesDjurfamilj {
         public override void Interact(Ball ball) {
             if(Hungry) {
                 Console.WriteLine("{0} whimpers and lays down", Name);
+                stream.Log("Too hungry to play");
             }
             else {
                 Console.WriteLine("{0} starts purring and lays down next to the {1}", Name, ball);
@@ -22,6 +23,7 @@ namespace JoppesDjurfamilj {
                     ball.Quality = 0;
                     Console.WriteLine(ball + " is now broken");
                 }
+                stream.Log("Quality went down to " + ball.Quality);
             }
         }
 

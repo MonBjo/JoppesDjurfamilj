@@ -12,15 +12,21 @@ namespace JoppesDjurfamilj {
         private string logFile = "log.txt"; // a log of what happens in the program
         private string statusFile = "status.txt"; // to remember status of pets and balls
 
+        internal string StatusFile {
+            get { return statusFile; }
+        }
+
         internal void Log(string stringToLog) {
             WriteToFile(logFile, $"[{DateTime.Now}] {stringToLog}");
         }
         
         internal void SaveStatus(List<string> newData) {
+            Log("Clears " + statusFile);
             File.Create(statusFile).Close(); // Clear file before updating data.
             foreach(string line in newData) {
                 WriteToFile(statusFile, line);
             }
+            Log("Adds up to date data");
         }
 
         internal List<string> LoadStatus() {

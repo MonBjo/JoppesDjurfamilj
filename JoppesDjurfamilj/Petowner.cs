@@ -61,6 +61,7 @@ namespace JoppesDjurfamilj {
 
         public void Menu() {
             while(true) {
+                stream.Log("Mainmenu loaded successfully");
                 Console.Clear();
                 Console.WriteLine("=== Welcome to {0}'s Family of Pets ===", namePetowner);
                 Console.WriteLine("[L] List pets\n" +
@@ -127,7 +128,6 @@ namespace JoppesDjurfamilj {
                                         try {
                                             Console.WriteLine($"If you want {namePetowner} to check on a ball, write its index.\n" +
                                                                "If not, leave it blank and press enter.");
-                                            //int userInputSubMenuBall = Convert.ToInt32(Console.ReadLine());
                                             string userInputSubMenuBall = Console.ReadLine();
                                             if(userInputSubMenuBall == "") {
                                                 break;
@@ -198,6 +198,7 @@ namespace JoppesDjurfamilj {
         }
 
         private void LogStatus() {
+            stream.Log("Begins status update to file, " + stream.StatusFile);
             List<string> updateData = new List<string>();
 
             foreach(Ball ball in balls) {
@@ -209,6 +210,7 @@ namespace JoppesDjurfamilj {
             }
 
             stream.SaveStatus(updateData);
+            stream.Log("Status update was successful");
         }
 
         public void ListAnimals() {
@@ -275,6 +277,7 @@ namespace JoppesDjurfamilj {
         }
 
         public void Fetch() {
+            stream.Log("Begins playing fetch");
             Console.Clear();
             ListAnimals();
             int interactWithPet;
@@ -289,7 +292,8 @@ namespace JoppesDjurfamilj {
                     }
                     else {
                         interactWithPet = userInputChoosePet - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
-                        Console.WriteLine("You choose to play with {0}!", pets[interactWithPet].name);
+                        Console.WriteLine("You choose to play with {0}!", pets[interactWithPet].Name);
+                        stream.Log($"Chosen pet: {interactWithPet} {pets[interactWithPet].Name}");
                         break; //Sucessful input
                     }
                 }
@@ -315,6 +319,7 @@ namespace JoppesDjurfamilj {
                     }
                     else {
                         indexBall = userInputChooseBall - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
+                        stream.Log($"Chosen ball, index: {indexBall} and quality: {balls[indexBall].Quality}");
                         break; //Sucessful input
                     }
                 }
@@ -325,9 +330,11 @@ namespace JoppesDjurfamilj {
                     Console.WriteLine("Please write an integer between 1 and " + pets.Count);
                 }
             }
-
+            
             Console.Clear();
             pets[interactWithPet].Interact(balls[indexBall]);
+            stream.Log("successfully played with pet");
+            LogStatus();
         }
 
         public void CheckBall(int indexBall) {
@@ -401,6 +408,7 @@ namespace JoppesDjurfamilj {
                     switch(userInput.Key) {
                         // Yes, fix the ball
                         case ConsoleKey.Y: {
+                            stream.Log($"Begins fixing a ball by index {indexBall} with a quality of {balls[indexBall].Quality}");
                             if(balls[indexBall].Quality < 4) {
                                 balls[indexBall].Quality = Ball.maxQuality;
                             }
@@ -411,8 +419,11 @@ namespace JoppesDjurfamilj {
                                 if(balls[indexBall].Quality > Ball.maxQuality) {
                                     balls[indexBall].Quality = Ball.maxQuality;
                                 }
+                                stream.Log("Quality went up to " + balls[indexBall].Quality);
+                                stream.Log($"Successfully fixed ball");
                             }
                             Console.WriteLine("\nThis is much better\n");
+                            LogStatus();
                             continueLoop = false;
                             break;
                         }
@@ -435,6 +446,7 @@ namespace JoppesDjurfamilj {
 
         public void Feed() {
             Console.Clear();
+            stream.Log("Begins feeding");
             int petIndex;
             ListAnimals();
             // Choose pet to interact with
@@ -449,6 +461,7 @@ namespace JoppesDjurfamilj {
                     else {
                         petIndex = userInputChoosePet - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
                         Console.WriteLine("You choose to feed {0}!", pets[petIndex].name);
+                        stream.Log($"Chosen pet: {petIndex} {pets[petIndex].Name}");
                         break; //Sucessful input
                     }
                 }
@@ -475,6 +488,7 @@ namespace JoppesDjurfamilj {
                     else {
                         foodIndex = userInputChooseFood - 1;
                         Console.WriteLine("{0} tries to feed {1} with {2}", namePetowner, pets[petIndex].Name, foods[foodIndex]);
+                        stream.Log($"Chosen food: {foods[foodIndex]}");
                         pets[petIndex].Eat(foods[foodIndex]);
                         break; //Sucessful input
                     }
@@ -486,7 +500,7 @@ namespace JoppesDjurfamilj {
                     Console.WriteLine("Please write an integer between 1 and " + pets.Count);
                 }
             }
-
+            stream.Log("Successfully feed a pet.");
         }
     }
 }

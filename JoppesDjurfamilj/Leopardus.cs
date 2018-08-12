@@ -16,6 +16,7 @@ namespace JoppesDjurfamilj {
             else {
                 Console.WriteLine("{0} ignores the ball and climbes the cat-tree instead.", Name);
             }
+                stream.Log("Not intersted in playing");
         }
 
         public override string ToString() {
