@@ -21,12 +21,12 @@ namespace JoppesDjurfamilj {
         }
         
         internal void SaveStatus(List<string> newData) {
-            Log("Clears " + statusFile);
+            Log("<stream>Clears " + statusFile);
             File.Create(statusFile).Close(); // Clear file before updating data.
             foreach(string line in newData) {
                 WriteToFile(statusFile, line);
             }
-            Log("Adds up to date data");
+            Log("<stream>Adds the up to date data");
         }
 
         internal List<string> LoadStatus() {
@@ -47,6 +47,7 @@ namespace JoppesDjurfamilj {
             }
             catch(Exception e) {
                 Console.WriteLine("The file could not be read: \n" + e.Message);
+                Log("<stream> Error: " + e.Message);
                 Console.ReadKey(true);
             }
             return lines;
@@ -60,6 +61,7 @@ namespace JoppesDjurfamilj {
             }
             catch(Exception e) {
                 Console.WriteLine("Unable to write to file: \n" + e.Message);
+                Log("<stream> Error: " + e.Message);
                 Console.ReadKey(true);
             }
         }

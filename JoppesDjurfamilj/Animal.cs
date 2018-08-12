@@ -3,8 +3,9 @@
 namespace JoppesDjurfamilj {
     abstract class Animal {
         // Defining data
-        internal Stream stream = new Stream();
         internal Random random = new Random();
+        internal Stream stream = new Stream();
+        internal string baseClassName = "animal";
         internal int age = 0;
         internal string name = "";
         internal string favFood = "";

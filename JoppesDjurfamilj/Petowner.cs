@@ -8,6 +8,8 @@ namespace JoppesDjurfamilj {
         // Defining data
         private int age = 0;
         private string namePetowner = "Joppe";
+        Stream stream = new Stream();
+        private string className = "petowner";
         private List<string> foods = new List<string>();
         internal List<Animal> pets = new List<Animal> {
             new Dog(5, "Alfons", "Pork", "Andalusier"),
@@ -27,10 +29,9 @@ namespace JoppesDjurfamilj {
             new Ball("Green", "Hard", 5, 29),
             new Ball("Blue", "Smooth", 3, 30)
         };
-        Stream stream = new Stream();
 
         public Petowner() {
-            stream.Log("Program started sucessfully");
+            stream.Log($"<{className}> Program started sucessfully");
             //TODO: Put logs where ever it's needed
             int petIndex = 0;
             int ballIndex = 0;
@@ -61,7 +62,7 @@ namespace JoppesDjurfamilj {
 
         public void Menu() {
             while(true) {
-                stream.Log("Mainmenu loaded successfully");
+                stream.Log($"<{className}> Mainmenu loaded successfully");
                 Console.Clear();
                 Console.WriteLine("=== Welcome to {0}'s Family of Pets ===", namePetowner);
                 Console.WriteLine("[L] List pets\n" +
@@ -139,11 +140,13 @@ namespace JoppesDjurfamilj {
                                                 break;
                                             }
                                         }
-                                        catch(FormatException) {
+                                        catch(FormatException e) {
                                             Console.WriteLine("Please write an integer between 1 and {0} or leave it blank, then press enter.", balls.Count);
+                                            stream.Log($"<{className}> Error: " + e.Message);
                                         }
                                         catch(Exception e) {
                                             Console.WriteLine(e.Message);
+                                            stream.Log($"<{className}> Error: " + e.Message);
                                         }
                                     }
                                     Console.WriteLine("============================\n" +
@@ -184,7 +187,7 @@ namespace JoppesDjurfamilj {
                     // Quit
                     case ConsoleKey.Q: {
                         LogStatus();
-                        stream.Log("Exiting program");
+                        stream.Log($"<{className}> Exiting program");
                         Environment.Exit(0);
                         break;
                     }
@@ -198,7 +201,7 @@ namespace JoppesDjurfamilj {
         }
 
         private void LogStatus() {
-            stream.Log("Begins status update to file, " + stream.StatusFile);
+            stream.Log($"<{className}> Begins status update to file, " + stream.StatusFile);
             List<string> updateData = new List<string>();
 
             foreach(Ball ball in balls) {
@@ -210,7 +213,7 @@ namespace JoppesDjurfamilj {
             }
 
             stream.SaveStatus(updateData);
-            stream.Log("Status update was successful");
+            stream.Log($"<{className}> Status update was successful");
         }
 
         public void ListAnimals() {
@@ -277,7 +280,7 @@ namespace JoppesDjurfamilj {
         }
 
         public void Fetch() {
-            stream.Log("Begins playing fetch");
+            stream.Log($"<{className}> Begins playing fetch");
             Console.Clear();
             ListAnimals();
             int interactWithPet;
@@ -293,15 +296,17 @@ namespace JoppesDjurfamilj {
                     else {
                         interactWithPet = userInputChoosePet - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
                         Console.WriteLine("You choose to play with {0}!", pets[interactWithPet].Name);
-                        stream.Log($"Chosen pet: {interactWithPet} {pets[interactWithPet].Name}");
+                        stream.Log($"<{className}> Chosen pet: {interactWithPet} {pets[interactWithPet].Name}");
                         break; //Sucessful input
                     }
                 }
-                catch(FormatException) {
+                catch(FormatException e) {
                     Console.WriteLine("Please write only an integer");
+                    stream.Log($"<{className}> Error: " + e.Message);
                 }
-                catch(OverflowException) {
+                catch(OverflowException e) {
                     Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                    stream.Log($"<{className}> Error: " + e.Message);
                 }
             }
 
@@ -319,21 +324,22 @@ namespace JoppesDjurfamilj {
                     }
                     else {
                         indexBall = userInputChooseBall - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
-                        stream.Log($"Chosen ball, index: {indexBall} and quality: {balls[indexBall].Quality}");
+                        stream.Log($"<{className}> Chosen ball, index: {indexBall} and quality: {balls[indexBall].Quality}");
                         break; //Sucessful input
                     }
                 }
-                catch(FormatException) {
+                catch(FormatException e) {
                     Console.WriteLine("Please write only an integer");
+                    stream.Log($"<{className}> Error: " + e.Message);
                 }
-                catch(OverflowException) {
+                catch(OverflowException e) {
                     Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                    stream.Log($"<{className}> Error: " + e.Message);
                 }
             }
             
             Console.Clear();
             pets[interactWithPet].Interact(balls[indexBall]);
-            stream.Log("successfully played with pet");
             LogStatus();
         }
 
@@ -408,7 +414,7 @@ namespace JoppesDjurfamilj {
                     switch(userInput.Key) {
                         // Yes, fix the ball
                         case ConsoleKey.Y: {
-                            stream.Log($"Begins fixing a ball by index {indexBall} with a quality of {balls[indexBall].Quality}");
+                            stream.Log($"<{className}> Begins fixing a ball by index {indexBall} with a quality of {balls[indexBall].Quality}");
                             if(balls[indexBall].Quality < 4) {
                                 balls[indexBall].Quality = Ball.maxQuality;
                             }
@@ -419,8 +425,8 @@ namespace JoppesDjurfamilj {
                                 if(balls[indexBall].Quality > Ball.maxQuality) {
                                     balls[indexBall].Quality = Ball.maxQuality;
                                 }
-                                stream.Log("Quality went up to " + balls[indexBall].Quality);
-                                stream.Log($"Successfully fixed ball");
+                                stream.Log($"<{className}> Quality went up to " + balls[indexBall].Quality);
+                                stream.Log($"<{className}> Successfully fixed ball");
                             }
                             Console.WriteLine("\nThis is much better\n");
                             LogStatus();
@@ -446,7 +452,7 @@ namespace JoppesDjurfamilj {
 
         public void Feed() {
             Console.Clear();
-            stream.Log("Begins feeding");
+            stream.Log($"<{className}> Begins feeding");
             int petIndex;
             ListAnimals();
             // Choose pet to interact with
@@ -461,15 +467,17 @@ namespace JoppesDjurfamilj {
                     else {
                         petIndex = userInputChoosePet - 1; // The index of the actual list starts at 0. The displayed list starts at 1.
                         Console.WriteLine("You choose to feed {0}!", pets[petIndex].name);
-                        stream.Log($"Chosen pet: {petIndex} {pets[petIndex].Name}");
+                        stream.Log($"<{className}> Chosen pet: {petIndex} {pets[petIndex].Name}");
                         break; //Sucessful input
                     }
                 }
-                catch(FormatException) {
+                catch(FormatException e) {
                     Console.WriteLine("Please write only an integer");
+                    stream.Log($"<{className}> Error: " + e.Message);
                 }
-                catch(OverflowException) {
+                catch(OverflowException e) {
                     Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                    stream.Log($"<{className}> Error: " + e.Message);
                 }
             }
 
@@ -488,19 +496,21 @@ namespace JoppesDjurfamilj {
                     else {
                         foodIndex = userInputChooseFood - 1;
                         Console.WriteLine("{0} tries to feed {1} with {2}", namePetowner, pets[petIndex].Name, foods[foodIndex]);
-                        stream.Log($"Chosen food: {foods[foodIndex]}");
+                        stream.Log($"<{className}> Chosen food: {foods[foodIndex]}");
                         pets[petIndex].Eat(foods[foodIndex]);
                         break; //Sucessful input
                     }
                 }
-                catch(FormatException) {
+                catch(FormatException e) {
                     Console.WriteLine("Please write only an integer");
+                    stream.Log($"<{className}> Error: " + e.Message);
                 }
-                catch(OverflowException) {
+                catch(OverflowException e) {
                     Console.WriteLine("Please write an integer between 1 and " + pets.Count);
+                    stream.Log($"<{className}> Error: " + e.Message);
                 }
             }
-            stream.Log("Successfully feed a pet.");
+            stream.Log($"<{className}> Successfully feed a pet.");
         }
     }
 }
